@@ -85,6 +85,9 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_output.c 280371 2015-03-23 15:12:02Z t
 #endif
 #endif
 
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 #define SCTP_MAX_GAPS_INARRAY 4
 struct sack_track {
 	uint8_t right_edge;	/* mergable on the right edge */

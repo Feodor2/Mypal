@@ -16,7 +16,7 @@ MOZ_BEGIN_EXTERN_C
  * JS that don't link with the crash reporter directly. This value will only
  * be consumed if the crash reporter is used by the target application.
  */
-MFBT_DATA const char* gMozCrashReason = nullptr;
+//MFBT_DATA const char* gMozCrashReason = nullptr;
 
 #ifndef DEBUG
 MFBT_API MOZ_COLD MOZ_NORETURN MOZ_NEVER_INLINE void
@@ -29,7 +29,6 @@ MOZ_CrashOOL(const char* aFilename, int aLine, const char* aReason)
 #ifdef DEBUG
   MOZ_ReportCrash(aReason, aFilename, aLine);
 #endif
-  MOZ_CRASH_ANNOTATE(aReason);
   MOZ_REALLY_CRASH(aLine);
 }
 
@@ -59,7 +58,6 @@ MOZ_CrashPrintf(const char* aFilename, int aLine, const char* aFormat, ...)
 #ifdef DEBUG
   MOZ_ReportCrash(sPrintfCrashReason, aFilename, aLine);
 #endif
-  MOZ_CRASH_ANNOTATE(sPrintfCrashReason);
   MOZ_REALLY_CRASH(aLine);
 }
 

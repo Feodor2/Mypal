@@ -31,7 +31,7 @@ extern "C" {
 // The following are available for Visual C and clangcl 32 bit:
 #if !defined(LIBYUV_DISABLE_X86) && defined(_M_IX86)
 #define HAS_TRANSPOSEWX8_SSSE3
-#define HAS_TRANSPOSEUVWX8_SSE2
+//#define HAS_TRANSPOSEUVWX8_SSE2
 #endif
 
 // The following are available for GCC 32 or 64 bit but not NaCL for 64 bit:

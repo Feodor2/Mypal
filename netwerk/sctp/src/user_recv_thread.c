@@ -72,6 +72,8 @@ void recv_thread_destroy(void);
 	((caddr_t) ap + (ap->sa_len ? ROUNDUP(ap->sa_len, sizeof (uint32_t)) : sizeof(uint32_t)))
 #endif
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 #if defined(__Userspace_os_Darwin) || defined(__Userspace_os_DragonFly) || defined(__Userspace_os_FreeBSD)
 static void
 sctp_get_rtaddrs(int addrs, struct sockaddr *sa, struct sockaddr **rti_info)

@@ -12,8 +12,8 @@
 
 #include "mozilla/mozalloc.h"
 
-#define malloc moz_xmalloc
-#define calloc moz_xcalloc
-#define realloc moz_xrealloc
+//#define malloc moz_xmalloc
+//#define calloc moz_xcalloc
+//#define realloc moz_xrealloc
 
 #endif // MOZ_GR_MALLOC_H

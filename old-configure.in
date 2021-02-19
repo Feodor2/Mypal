@@ -1262,7 +1262,7 @@ MOZ_CXX11
 AC_LANG_C
 
 case "${OS_TARGET}" in
-Darwin)
+WINNT|Darwin)
   ;;
 *)
   STL_FLAGS="-I${DIST}/stl_wrappers"
@@ -3163,7 +3163,12 @@ if test -n "$MOZ_ANGLE_RENDERER"; then
       AC_MSG_RESULT([Windows SDK not found.])
     fi
   else
-    AC_MSG_ERROR([Couldn't find Windows SDK 8.1 or higher needed for ANGLE.])
+    if test "$CC" == "gcc"; then
+      MOZ_DIRECTX_SDK_PATH=
+    else
+      AC_MSG_RESULT([ $CC  DirectX SDK not found.])
+dnl       AC_MSG_ERROR([Couldn't find Windows SDK 8.1 or higher needed for ANGLE.])
+    fi
   fi
 
   if test -z "$MOZ_D3DCOMPILER_VISTA_DLL_PATH"; then

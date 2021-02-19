@@ -50,7 +50,7 @@ typedef struct nr_interface_ {
 
 typedef struct nr_local_addr_ {
   nr_transport_addr addr;
-  nr_interface interface;
+  nr_interface sukanah_interface;
 } nr_local_addr;
 
 int nr_local_addr_copy(nr_local_addr *to, nr_local_addr *from);

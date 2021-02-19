@@ -51,6 +51,7 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_auth.c 355931 2019-12-20 15:25:08Z tue
 #define SCTP_AUTH_DEBUG2	(SCTP_BASE_SYSCTL(sctp_debug_on) & SCTP_DEBUG_AUTH2)
 #endif /* SCTP_DEBUG */
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
 
 void
 sctp_clear_chunklist(sctp_auth_chklist_t *chklist)

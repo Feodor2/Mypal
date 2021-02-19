@@ -250,7 +250,7 @@ void TransposeWx8_Fast_SSSE3(const uint8* src, int src_stride,
 #endif  // defined(HAS_TRANSPOSEWX8_FAST_SSSE3)
 
 // Transpose UV 8x8.  64 bit.
-#if defined(HAS_TRANSPOSEUVWX8_SSE2)
+#if defined(HAS_TRANSPOSEUVWX8_SSE2) && defined(__x86_64__)
 void TransposeUVWx8_SSE2(const uint8* src, int src_stride,
                          uint8* dst_a, int dst_stride_a,
                          uint8* dst_b, int dst_stride_b, int width) {
@@ -262,24 +262,24 @@ void TransposeUVWx8_SSE2(const uint8* src, int src_stride,
     "movdqu     (%0),%%xmm0                      \n"
     "movdqu     (%0,%4),%%xmm1                   \n"
     "lea        (%0,%4,2),%0                     \n"
-    "movdqa     %%xmm0,%%xmm8                    \n"
+    "movdqa     %%xmm0,%%xmm7                    \n"
     "punpcklbw  %%xmm1,%%xmm0                    \n"
-    "punpckhbw  %%xmm1,%%xmm8                    \n"
-    "movdqa     %%xmm8,%%xmm1                    \n"
+    "punpckhbw  %%xmm1,%%xmm7                    \n"
+    "movdqa     %%xmm7,%%xmm1                    \n"
     "movdqu     (%0),%%xmm2                      \n"
     "movdqu     (%0,%4),%%xmm3                   \n"
     "lea        (%0,%4,2),%0                     \n"
-    "movdqa     %%xmm2,%%xmm8                    \n"
+    "movdqa     %%xmm2,%%xmm7                    \n"
     "punpcklbw  %%xmm3,%%xmm2                    \n"
-    "punpckhbw  %%xmm3,%%xmm8                    \n"
-    "movdqa     %%xmm8,%%xmm3                    \n"
+    "punpckhbw  %%xmm3,%%xmm7                    \n"
+    "movdqa     %%xmm7,%%xmm3                    \n"
     "movdqu     (%0),%%xmm4                      \n"
     "movdqu     (%0,%4),%%xmm5                   \n"
     "lea        (%0,%4,2),%0                     \n"
-    "movdqa     %%xmm4,%%xmm8                    \n"
+    "movdqa     %%xmm4,%%xmm7                    \n"
     "punpcklbw  %%xmm5,%%xmm4                    \n"
-    "punpckhbw  %%xmm5,%%xmm8                    \n"
-    "movdqa     %%xmm8,%%xmm5                    \n"
+    "punpckhbw  %%xmm5,%%xmm7                    \n"
+    "movdqa     %%xmm7,%%xmm5                    \n"
     "movdqu     (%0),%%xmm6                      \n"
     "movdqu     (%0,%4),%%xmm7                   \n"
     "lea        (%0,%4,2),%0                     \n"

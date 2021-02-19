@@ -77,6 +77,9 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctputil.c 280439 2015-03-24 14:51:46Z tuex
 #endif
 #endif
 
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 extern struct sctp_cc_functions sctp_cc_functions[];
 extern struct sctp_ss_functions sctp_ss_functions[];
 

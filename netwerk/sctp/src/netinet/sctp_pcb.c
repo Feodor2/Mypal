@@ -80,6 +80,8 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_pcb.c 355931 2019-12-20 15:25:08Z tuex
 #define APPLE_FILE_NO 4
 #endif
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 #if defined(__FreeBSD__) && __FreeBSD_version >= 801000
 VNET_DEFINE(struct sctp_base_info, system_base_info);
 #else

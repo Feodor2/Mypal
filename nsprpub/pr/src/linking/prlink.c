@@ -356,7 +356,7 @@ pr_UnlockedFindLibrary(const char *name)
         cp = cp ? cp + 1 : lm->name;
 #ifdef WIN32
         /* Windows DLL names are case insensitive... */
-        if (strcmpi(np, cp) == 0)
+        if (lstrcmpi(np, cp) == 0)
 #elif defined(XP_OS2)
         if (stricmp(np, cp) == 0)
 #else

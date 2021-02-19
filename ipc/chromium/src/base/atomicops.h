@@ -97,7 +97,7 @@ Atomic32 Release_CompareAndSwap(volatile Atomic32* ptr,
                                 Atomic32 old_value,
                                 Atomic32 new_value);
 
-void MemoryBarrier();
+void MemoryBarrier2();
 void NoBarrier_Store(volatile Atomic32* ptr, Atomic32 value);
 void Acquire_Store(volatile Atomic32* ptr, Atomic32 value);
 void Release_Store(volatile Atomic32* ptr, Atomic32 value);
@@ -133,8 +133,10 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 }  // namespace base
 
 // Include our platform specific implementation.
-#if defined(OS_WIN) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_WIN) && defined(ARCH_CPU_X86_FAMILY) && defined(_MSC_VER)
 #include "base/atomicops_internals_x86_msvc.h"
+#elif defined(OS_WIN) && defined(ARCH_CPU_X86_FAMILY) && defined(__MINGW32__)
+#include "base/atomicops_internals_x86_gcc.h"
 #elif defined(OS_MACOSX) && defined(ARCH_CPU_X86_FAMILY)
 #include "base/atomicops_internals_x86_macosx.h"
 #elif defined(COMPILER_GCC) && defined(ARCH_CPU_X86_FAMILY)

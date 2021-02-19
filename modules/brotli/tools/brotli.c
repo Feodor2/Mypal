@@ -46,8 +46,8 @@
 #define fdopen _fdopen
 #define isatty _isatty
 #define unlink _unlink
-#define utimbuf _utimbuf
-#define utime _utime
+#define utimbuf __utimbuf32
+#define utime _utime32
 
 #define fopen ms_fopen
 #define open ms_open

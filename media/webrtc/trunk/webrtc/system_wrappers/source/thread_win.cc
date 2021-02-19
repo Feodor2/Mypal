@@ -37,7 +37,7 @@ typedef struct tagTHREADNAME_INFO {
   DWORD dwFlags;
 } THREADNAME_INFO;
 
-void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName) {
+/*void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName) {
   THREADNAME_INFO info;
   info.dwType = 0x1000;
   info.szName = szThreadName;
@@ -50,7 +50,7 @@ void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName) {
   }
   __except(EXCEPTION_CONTINUE_EXECUTION) {
   }
-}
+}*/
 
 }
 
@@ -126,8 +126,8 @@ bool ThreadWindows::SetPriority(ThreadPriority priority) {
 }
 
 void ThreadWindows::Run() {
-  if (!name_.empty())
-    SetThreadName(static_cast<DWORD>(-1), name_.c_str());
+//  if (!name_.empty())
+//    SetThreadName(static_cast<DWORD>(-1), name_.c_str());
 
   do {
     // The interface contract of Start/Stop is that for a successfull call to
@@ -206,8 +206,8 @@ void ThreadWindowsUI::Run() {
     assert(false);
   }
 
-  if (!name_.empty())
-    SetThreadName(static_cast<DWORD>(-1), name_.c_str());
+  //if (!name_.empty())
+  //  SetThreadName(static_cast<DWORD>(-1), name_.c_str());
 
   do {
     // The interface contract of Start/Stop is that for a successful call to

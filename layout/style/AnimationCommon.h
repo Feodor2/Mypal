@@ -18,6 +18,13 @@
 #include "nsCSSPseudoElements.h"
 #include "nsCycleCollectionParticipant.h"
 
+// GetCurrentTime is defined in winbase.h as zero argument macro forwarding to
+// GetTickCount().
+#ifdef GetCurrentTime
+#undef GetCurrentTime
+#endif
+
+
 class nsIFrame;
 class nsPresContext;
 

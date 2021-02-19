@@ -361,7 +361,7 @@ typedef struct tagTHREADNAME_INFO {
   DWORD dwFlags;
 } THREADNAME_INFO;
 
-void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName) {
+/*void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName) {
   THREADNAME_INFO info;
   info.dwType = 0x1000;
   info.szName = szThreadName;
@@ -374,14 +374,14 @@ void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName) {
   }
   __except(EXCEPTION_CONTINUE_EXECUTION) {
   }
-}
+}*/
 #endif  // WEBRTC_WIN
 
 void* Thread::PreRun(void* pv) {
   ThreadInit* init = static_cast<ThreadInit*>(pv);
   ThreadManager::Instance()->SetCurrentThread(init->thread);
 #if defined(WEBRTC_WIN)
-  SetThreadName(GetCurrentThreadId(), init->thread->name_.c_str());
+//  SetThreadName(GetCurrentThreadId(), init->thread->name_.c_str());
 #elif defined(WEBRTC_POSIX)
   // TODO: See if naming exists for pthreads.
 #endif

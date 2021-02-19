@@ -3392,7 +3392,7 @@ DWORD AudioDeviceWindowsCore::DoRenderThread()
       return 1;
     }
 
-    _SetThreadName(0, "webrtc_core_audio_render_thread");
+    //_SetThreadName(0, "webrtc_core_audio_render_thread");
 
     // Use Multimedia Class Scheduler Service (MMCSS) to boost the thread priority.
     //
@@ -3669,7 +3669,7 @@ DWORD AudioDeviceWindowsCore::InitCaptureThreadPriority()
 {
     _hMmTask = NULL;
 
-    _SetThreadName(0, "webrtc_core_audio_capture_thread");
+    //_SetThreadName(0, "webrtc_core_audio_capture_thread");
 
     // Use Multimedia Class Scheduler Service (MMCSS) to boost the thread
     // priority.
@@ -5076,7 +5076,7 @@ void AudioDeviceWindowsCore::_TraceCOMError(HRESULT hr) const
 //  _SetThreadName
 // ----------------------------------------------------------------------------
 
-void AudioDeviceWindowsCore::_SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
+/*void AudioDeviceWindowsCore::_SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
 {
     // See http://msdn.microsoft.com/en-us/library/xcb2z8hs(VS.71).aspx for details on the code
     // in this function. Name of article is "Setting a Thread Name (Unmanaged)".
@@ -5094,7 +5094,7 @@ void AudioDeviceWindowsCore::_SetThreadName(DWORD dwThreadID, LPCSTR szThreadNam
     __except (EXCEPTION_CONTINUE_EXECUTION)
     {
     }
-}
+}*/
 
 // ----------------------------------------------------------------------------
 //  WideToUTF8

@@ -13,7 +13,7 @@
         #include <intrin.h>
         static void cpuid (uint32_t abcd[4]) { __cpuid  ((int*)abcd, 1);    }
         static void cpuid7(uint32_t abcd[4]) { __cpuidex((int*)abcd, 7, 0); }
-        static uint64_t xgetbv(uint32_t xcr) { return _xgetbv(xcr); }
+        static uint64_t xgetbv(uint32_t xcr) { return xgetbv(xcr); }
     #else
         #include <cpuid.h>
         #if !defined(__cpuid_count)  // Old Mac Clang doesn't have this defined.

@@ -91,6 +91,8 @@ LOCAL_INCLUDES += [
 
 include('/ipc/chromium/chromium-config.mozbuild')
 
+OS_LIBS += ['pdh']
+
 FINAL_LIBRARY = 'xul'
 
 if CONFIG['GNU_CXX']:

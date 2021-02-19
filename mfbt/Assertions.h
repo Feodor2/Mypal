@@ -29,7 +29,7 @@
  * available to all code, even libraries that don't link with the crash reporter
  * directly.
  */
-MOZ_BEGIN_EXTERN_C
+/*MOZ_BEGIN_EXTERN_C
 extern MFBT_DATA const char* gMozCrashReason;
 MOZ_END_EXTERN_C
 
@@ -39,7 +39,7 @@ AnnotateMozCrashReason(const char* reason)
   gMozCrashReason = reason;
 }
 #  define MOZ_CRASH_ANNOTATE(...) AnnotateMozCrashReason(__VA_ARGS__)
-#else
+#else*/
 #  define MOZ_CRASH_ANNOTATE(...) do { /* nothing */ } while (0)
 #endif
 
@@ -273,14 +273,12 @@ __declspec(noreturn) __inline void MOZ_NoReturn() {}
 #ifndef DEBUG
 #  define MOZ_CRASH(...) \
      do { \
-       MOZ_CRASH_ANNOTATE("MOZ_CRASH(" __VA_ARGS__ ")"); \
        MOZ_REALLY_CRASH(__LINE__); \
      } while (0)
 #else
 #  define MOZ_CRASH(...) \
      do { \
        MOZ_ReportCrash("" __VA_ARGS__, __FILE__, __LINE__); \
-       MOZ_CRASH_ANNOTATE("MOZ_CRASH(" __VA_ARGS__ ")"); \
        MOZ_REALLY_CRASH(__LINE__); \
      } while (0)
 #endif
@@ -427,7 +425,6 @@ struct AssertionConditionType
     MOZ_VALIDATE_ASSERT_CONDITION_TYPE(expr); \
     if (MOZ_UNLIKELY(!MOZ_CHECK_ASSERT_ASSIGNMENT(expr))) { \
       MOZ_ReportAssertionFailure(#expr, __FILE__, __LINE__); \
-      MOZ_CRASH_ANNOTATE("MOZ_RELEASE_ASSERT(" #expr ")"); \
       MOZ_REALLY_CRASH(__LINE__); \
     } \
   } while (0)
@@ -437,7 +434,6 @@ struct AssertionConditionType
     MOZ_VALIDATE_ASSERT_CONDITION_TYPE(expr); \
     if (MOZ_UNLIKELY(!MOZ_CHECK_ASSERT_ASSIGNMENT(expr))) { \
       MOZ_ReportAssertionFailure(#expr " (" explain ")", __FILE__, __LINE__); \
-      MOZ_CRASH_ANNOTATE("MOZ_RELEASE_ASSERT(" #expr ") (" explain ")"); \
       MOZ_REALLY_CRASH(__LINE__); \
     } \
   } while (0)

@@ -32,7 +32,6 @@ av_fft_calc
 av_fft_end
 av_fft_init
 av_fft_permute
-av_fopen_utf8
 av_free_packet
 av_get_audio_frame_duration
 av_get_audio_frame_duration2

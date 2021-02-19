@@ -97,7 +97,7 @@ getwintimeofday(struct timeval *tv)
 {
 	struct timeb tb;
 
-	ftime(&tb);
+	_ftime32(&tb);
 	tv->tv_sec = (long)tb.time;
 	tv->tv_usec = (long)(tb.millitm) * 1000L;
 }

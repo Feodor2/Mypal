@@ -68,6 +68,8 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_usrreq.c 356270 2020-01-02 13:55:10Z t
 #define APPLE_FILE_NO 7
 #endif
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 extern struct sctp_cc_functions sctp_cc_functions[];
 extern struct sctp_ss_functions sctp_ss_functions[];
 

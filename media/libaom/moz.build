@@ -143,3 +143,6 @@ LOCAL_INCLUDES += [
     '/media/libaom/config', # aom_version.h
     '/media/libaom/src',
 ]
+
+if CONFIG['GNU_CC']:
+    OS_LIBS += ['pthread']

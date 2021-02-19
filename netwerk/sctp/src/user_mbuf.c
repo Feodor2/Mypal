@@ -46,6 +46,9 @@
 #include "user_atomic.h"
 #include "netinet/sctp_pcb.h"
 
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 struct mbstat mbstat;
 #define KIPC_MAX_LINKHDR        4       /* int: max length of link header (see sys/sysclt.h) */
 #define KIPC_MAX_PROTOHDR	5	/* int: max length of network header (see sys/sysclt.h)*/

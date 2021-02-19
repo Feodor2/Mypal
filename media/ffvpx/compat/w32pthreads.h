@@ -35,7 +35,10 @@
  * As most functions here are used without checking return values,
  * only implement return values as necessary. */
 
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif
+
 #include <windows.h>
 #include <process.h>
 

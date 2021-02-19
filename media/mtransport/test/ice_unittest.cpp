@@ -1996,8 +1996,8 @@ class WebRtcIcePrioritizerTest : public StunTest {
     std::string str_addr = "10.0.0." + num;
     std::string ifname = "eth" + num;
     nr_local_addr local_addr;
-    local_addr.interface.type = type;
-    local_addr.interface.estimated_speed = estimated_speed;
+    local_addr.sukanah_interface.type = type;
+    local_addr.sukanah_interface.estimated_speed = estimated_speed;
 
     int r = nr_str_port_to_transport_addr(str_addr.c_str(), 0,
                                           IPPROTO_UDP, &(local_addr.addr));

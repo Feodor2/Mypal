@@ -74,7 +74,8 @@ if CONFIG['OS_TARGET'] == 'Android':
 if CONFIG['OS_ARCH'] == 'WINNT' and CONFIG['MOZ_MEMORY']:
     DEFINES['HAVE_MALLOC_USABLE_SIZE'] = True
     DEFINES['SQLITE_WITHOUT_MSIZE'] = True
-    CFLAGS += ['-wd4013']
+    if CONFIG['_MSC_VER']:
+        CFLAGS += ['-wd4013']
 
 # Omit unused functions to save some library footprint.
 DEFINES['SQLITE_OMIT_DEPRECATED'] = True

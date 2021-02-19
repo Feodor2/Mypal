@@ -56,6 +56,9 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_cc_functions.c 279859 2015-03-10 19:49
 #define SHIFT_MPTCP_MULTI_Z 16
 #define SHIFT_MPTCP_MULTI 8
 
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 static void
 sctp_enforce_cwnd_limit(struct sctp_association *assoc, struct sctp_nets *net)
 {

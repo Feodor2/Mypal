@@ -15,6 +15,7 @@ static const char *logTag = "sdp_token";
 
 #define MCAST_STRING_LEN 4
 
+#define MIN(a,b) (((a) < (b)) ? (a) : (b))
 
 sdp_result_e sdp_parse_version (sdp_t *sdp_p, uint16_t level, const char *ptr)
 {

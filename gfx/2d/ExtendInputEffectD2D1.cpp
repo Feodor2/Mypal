@@ -11,6 +11,7 @@
 #include "HelpersD2D.h"
 
 #include <vector>
+#include <float.h>
 
 #define TEXTW(x) L##x
 #define XML(X) TEXTW(#X) // This macro creates a single string from multiple lines of text.

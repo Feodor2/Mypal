@@ -51,7 +51,9 @@ static char *RCSSTRING __UNUSED__ ="$Id: r_log.c,v 1.10 2008/11/25 22:25:18 adam
 #include <errno.h>
 #ifndef _MSC_VER
 #include <strings.h>
+#ifndef WIN32
 #include <syslog.h>
+#endif
 #endif
 #include <registry.h>
 #include <time.h>

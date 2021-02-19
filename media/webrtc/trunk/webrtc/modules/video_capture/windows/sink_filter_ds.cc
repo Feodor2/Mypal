@@ -334,7 +334,7 @@ CaptureInputPin::Receive ( IN IMediaSample * pIMediaSample )
         // See http://msdn.microsoft.com/en-us/library/xcb2z8hs(VS.71).aspx for details on the code
         // in this function. Name od article is "Setting a Thread Name (Unmanaged)".
 
-        THREADNAME_INFO info;
+        /*THREADNAME_INFO info;
         info.dwType = 0x1000;
         info.szName = "capture_thread";
         info.dwThreadID = (DWORD)-1;
@@ -347,7 +347,7 @@ CaptureInputPin::Receive ( IN IMediaSample * pIMediaSample )
         }
         __except (EXCEPTION_CONTINUE_EXECUTION)
         {
-        }
+        }*/
 
     }
 

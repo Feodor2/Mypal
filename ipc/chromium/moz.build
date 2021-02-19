@@ -57,6 +57,10 @@ if os_win:
         'src/chrome/common/process_watcher_win.cc',
         'src/chrome/common/transport_dib_win.cc',
     ]
+    if CONFIG['GNU_CC'] == '1':
+        SOURCES += [
+            'src/base/atomicops_internals_x86_gcc.cc',
+        ]
 else:
     DIRS += ['src/third_party']
 

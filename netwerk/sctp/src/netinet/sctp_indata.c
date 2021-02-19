@@ -46,7 +46,10 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_indata.c 280440 2015-03-24 15:05:36Z t
 #include <netinet/sctp_indata.h>
 #include <netinet/sctp_uio.h>
 #include <netinet/sctp_timer.h>
+#include <minmax.h>
 
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
 
 /*
  * NOTES: On the outbound side of things I need to check the sack timer to

@@ -199,6 +199,9 @@
 #include <windows.h>
 #include <intrin.h>
 
+#define min2(a,b) (((a) < (b)) ? (a) : (b))
+#define min min2
+
 #pragma warning( disable: 4267 4996 4146 )
 
 #define	bool BOOL
@@ -218,7 +221,7 @@ static unsigned long tlsIndex = 0xffffffff;
 #define	_pthread_self() __threadid()
 
 /* use MSVC intrinsics */
-#pragma intrinsic(_BitScanForward)
+/*#pragma intrinsic(_BitScanForward)
 static __forceinline int
 ffs(int x)
 {
@@ -228,7 +231,8 @@ ffs(int x)
 		return (i + 1);
 
 	return (0);
-}
+}*/
+#define	ffs __builtin_ffs
 
 /* Implement getenv without using malloc */
 static char mozillaMallocOptionsBuf[64];
@@ -249,10 +253,12 @@ typedef unsigned char uint8_t;
 typedef unsigned uint32_t;
 typedef unsigned long long uint64_t;
 typedef unsigned long long uintmax_t;
+#if defined(_MSC_VER)
 #if defined(_WIN64)
 typedef long long ssize_t;
 #else
 typedef long ssize_t;
+#endif
 #endif
 
 #define	MALLOC_DECOMMIT

@@ -60,7 +60,7 @@ protected:
                         int32_t capabilityIndex);
 
     int32_t DisconnectGraph();
-    HRESULT VideoCaptureDS::ConnectDVCamera();
+    HRESULT ConnectDVCamera();
 
     DeviceInfoDS _dsInfo;
     VideoCaptureCapability _activeCapability;

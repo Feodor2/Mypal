@@ -64,6 +64,8 @@ MALLOC_DEFINE(M_PCB, "sctp_pcb", "sctp pcb");
 MALLOC_DEFINE(M_SONAME, "sctp_soname", "sctp soname");
 #define MAXLEN_MBUF_CHAIN  32
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 /* Prototypes */
 extern int sctp_sosend(struct socket *so, struct sockaddr *addr, struct uio *uio,
                        struct mbuf *top, struct mbuf *control, int flags,
@@ -3151,7 +3153,8 @@ usrsctp_dumppacket(void *buf, size_t len, int outbound)
 	}
 	pos = 0;
 #ifdef _WIN32
-	ftime(&tb);
+	//ftime(&tb);
+	_ftime32(&tb);
 	localtime_s(&t, &tb.time);
 	_snprintf_s(dump_buf, PREAMBLE_LENGTH + 1, PREAMBLE_LENGTH, PREAMBLE_FORMAT,
 	            outbound ? 'O' : 'I',

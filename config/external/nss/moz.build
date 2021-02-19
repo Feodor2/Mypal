@@ -28,9 +28,8 @@ else:
         '/security/nss/lib/smime/smime3',
         '/security/nss/lib/ssl/ssl3',
         '/security/nss/lib/util/nssutil3',
+        'sqlite',
     ]
-
-USE_LIBS += ['sqlite']
 
 # XXX: We should fix these warnings.
 ALLOW_COMPILER_WARNINGS = True

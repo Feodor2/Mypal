@@ -93,6 +93,11 @@ JAR_COMPRESSION=brotli
 # Set the default top-level extensions
 MOZ_EXTENSIONS_DEFAULT=" gio"
 
+# Fold Libs
+if test "$OS_TARGET" = "WINNT" -o "$OS_TARGET" = "Darwin"; then
+  MOZ_FOLD_LIBS=1
+fi
+
 # Include bundled fonts
 if test "$OS_ARCH" = "WINNT" -o \
         "$OS_ARCH" = "Linux"; then

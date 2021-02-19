@@ -5,8 +5,10 @@
 
 external_dirs = []
 
-DIRS += ['lgpllibs']
-
+DIRS += [
+    'lgpllibs',
+    'sqlite',
+]
 if not CONFIG['MOZ_SYSTEM_JPEG']:
     external_dirs += ['media/libjpeg']
 

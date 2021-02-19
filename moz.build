@@ -68,9 +68,6 @@ if not CONFIG['MOZ_DISABLE_PLATFORM']:
     if CONFIG['COMPILE_ENVIRONMENT']:
 
         if not CONFIG['JS_STANDALONE']:
-            # Hopefully build sqlite before nss
-            DIRS += ['db/sqlite3/src']
-
             DIRS += [
                 'config/external',
                 'config/external/nss',

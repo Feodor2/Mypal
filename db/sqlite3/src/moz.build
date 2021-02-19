@@ -2,18 +2,25 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 NO_VISIBILITY_FLAGS = True
+
+EXPORTS += [
+    'sqlite3.h',
+]
 
 # We allow warnings for third-party code that can be updated from upstream.
 ALLOW_COMPILER_WARNINGS = True
 
-GeckoSharedLibrary('sqlite', linkage=None, mozglue='library')
-SHARED_LIBRARY_NAME = 'mozsqlite3'
-SYMBOLS_FILE = 'sqlite.symbols'
+if CONFIG['MOZ_FOLD_LIBS']:
+    # When folding libraries, sqlite is actually in the nss library.
+    FINAL_LIBRARY = 'nss'
+else:
+    # The final library is in config/external/sqlite
+    FINAL_LIBRARY = 'sqlite'
 
-EXPORTS += ['sqlite3.h']
-SOURCES += ['sqlite3.c']
+SOURCES += [
+    'sqlite3.c',
+]
 
 # -DSQLITE_SECURE_DELETE=1 will cause SQLITE to 0-fill delete data so we
 # don't have to vacuum to make sure the data is not visible in the file.
@@ -26,11 +33,8 @@ SOURCES += ['sqlite3.c']
 # hidden preference.  If that preference is missing or invalid then this value
 # will be used.
 # Note: Be sure to update the configure.in checks when these change!
-for var in ('SQLITE_SECURE_DELETE',
-            'SQLITE_THREADSAFE',
-            'SQLITE_CORE',
-            'SQLITE_ENABLE_FTS3',
-            'SQLITE_ENABLE_UNLOCK_NOTIFY',
+for var in ('SQLITE_SECURE_DELETE', 'SQLITE_THREADSAFE', 'SQLITE_CORE',
+            'SQLITE_ENABLE_FTS3', 'SQLITE_ENABLE_UNLOCK_NOTIFY',
             'SQLITE_ENABLE_DBSTAT_VTAB'):
     DEFINES[var] = 1
 

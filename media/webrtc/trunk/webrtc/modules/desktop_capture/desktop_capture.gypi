@@ -85,11 +85,11 @@
             'MULTI_MONITOR_SCREENSHARE'
           ],
         }],
-        ['OS!="ios" and (target_arch=="ia32" or target_arch=="x64")', {
-          'dependencies': [
-            'desktop_capture_differ_sse2',
-          ],
-        }],
+#        ['OS!="ios" and (target_arch=="ia32" or target_arch=="x64")', {
+#          'dependencies': [
+#            'desktop_capture_differ_sse2',
+#          ],
+#        }],
         ['use_x11 == 1', {
           'defines':[
             'USE_X11',
@@ -189,26 +189,26 @@
       ],
     },
   ],  # targets
-  'conditions': [
-    ['OS!="ios" and (target_arch=="ia32" or target_arch=="x64")', {
-      'targets': [
-        {
-          # Have to be compiled as a separate target because it needs to be
-          # compiled with SSE2 enabled.
-          'target_name': 'desktop_capture_differ_sse2',
-          'type': 'static_library',
-          'sources': [
-            "differ_block_sse2.cc",
-            "differ_block_sse2.h",
-          ],
-          'conditions': [
-            [ 'os_posix == 1 and OS != "mac"', {
-              'cflags': [ '-msse2', ],
-              'cflags_mozilla': [ '-msse2', ],
-            }],
-          ],
-        },
-      ],  # targets
-    }],
-  ],
+#  'conditions': [
+#    ['OS!="ios" and (target_arch=="ia32" or target_arch=="x64")', {
+#      'targets': [
+#        {
+#          # Have to be compiled as a separate target because it needs to be
+#          # compiled with SSE2 enabled.
+#          'target_name': 'desktop_capture_differ_sse2',
+#          'type': 'static_library',
+#          'sources': [
+#            "differ_block_sse2.cc",
+#            "differ_block_sse2.h",
+#          ],
+#          'conditions': [
+#            [ 'os_posix == 1 and OS != "mac"', {
+#              'cflags': [ '-msse2', ],
+#              'cflags_mozilla': [ '-msse2', ],
+#            }],
+#          ],
+#        },
+#      ],  # targets
+#    }],
+#  ],
 }

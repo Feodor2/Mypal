@@ -49,7 +49,7 @@
 !define MinSupportedVer "Microsoft Windows XP"
 #endif
 
-!define MinSupportedCPU "SSE2"
+!define MinSupportedCPU "SSE"
 
 # File details shared by both the installer and uninstaller
 VIProductVersion "1.0.0.0"

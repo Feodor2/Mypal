@@ -19,8 +19,8 @@ SOURCES += [
 if CONFIG['INTEL_ARCHITECTURE']:
     # These files use MMX and SSE2 intrinsics, so they need special compile flags
     # on some compilers.
-    SOURCES += ['yuv_convert_sse2.cpp']
-    SOURCES['yuv_convert_sse2.cpp'].flags += CONFIG['SSE2_FLAGS']
+    #SOURCES += ['yuv_convert_sse2.cpp']
+    #SOURCES['yuv_convert_sse2.cpp'].flags += CONFIG['SSE2_FLAGS']
 
     # MSVC doesn't support MMX when targeting AMD64.
     if CONFIG['_MSC_VER']:

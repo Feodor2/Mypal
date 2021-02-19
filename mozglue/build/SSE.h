@@ -245,7 +245,7 @@ namespace mozilla {
   inline bool supports_sse() { return false; }
 #endif
 
-#if defined(MOZILLA_PRESUME_SSE2)
+/*#if defined(MOZILLA_PRESUME_SSE2)
 #define MOZILLA_MAY_SUPPORT_SSE2 1
   inline bool supports_sse2() { return true; }
 #elif defined(MOZILLA_SSE_HAVE_CPUID_DETECTION)
@@ -253,7 +253,8 @@ namespace mozilla {
   inline bool supports_sse2() { return sse_private::sse2_enabled; }
 #else
   inline bool supports_sse2() { return false; }
-#endif
+#endif*/
+inline bool supports_sse2() { return false; }
 
 #if defined(MOZILLA_PRESUME_SSE3)
 #define MOZILLA_MAY_SUPPORT_SSE3 1

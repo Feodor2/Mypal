@@ -13,7 +13,7 @@
 #include <string.h>
 
 #include "build/build_config.h"
-#include "webrtc/modules/desktop_capture/differ_block_sse2.h"
+//#include "webrtc/modules/desktop_capture/differ_block_sse2.h"
 #include "webrtc/system_wrappers/interface/cpu_features_wrapper.h"
 
 namespace webrtc {
@@ -41,7 +41,7 @@ int BlockDifference(const uint8_t* image1, const uint8_t* image2, int stride) {
     // TODO(hclam): Implement a NEON version.
     diff_proc = &BlockDifference_C;
 #else
-    bool have_sse2 = WebRtc_GetCPUInfo(kSSE2) != 0;
+/*    bool have_sse2 = WebRtc_GetCPUInfo(kSSE2) != 0;
     // For x86 processors, check if SSE2 is supported.
     if (have_sse2 && kBlockSize == 32) {
       diff_proc = &BlockDifference_SSE2_W32;
@@ -49,7 +49,7 @@ int BlockDifference(const uint8_t* image1, const uint8_t* image2, int stride) {
       diff_proc = &BlockDifference_SSE2_W16;
     } else {
       diff_proc = &BlockDifference_C;
-    }
+    }*/
 #endif
   }
 

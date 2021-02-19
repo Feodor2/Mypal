@@ -85,10 +85,10 @@ use_vmx = False
 use_arm_simd_gcc = False
 use_arm_neon_gcc = False
 if '86' in CONFIG['OS_TEST']:
-    use_sse2 = True
-    if '64' not in CONFIG['OS_TEST']:
-        if CONFIG['_MSC_VER']:
-            use_mmx = True
+#    use_sse2 = True
+#    if '64' not in CONFIG['OS_TEST']:
+#        if CONFIG['_MSC_VER']:
+#            use_mmx = True
     if CONFIG['GNU_CC']:
         use_mmx = True
 elif 'ppc' in CONFIG['OS_TEST']:

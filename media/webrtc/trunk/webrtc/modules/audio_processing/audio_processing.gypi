@@ -177,9 +177,9 @@
             'ns/windows_private.h',
           ],
         }],
-        ['target_arch=="ia32" or target_arch=="x64"', {
-          'dependencies': ['audio_processing_sse2',],
-        }],
+#        ['target_arch=="ia32" or target_arch=="x64"', {
+#          'dependencies': ['audio_processing_sse2',],
+#        }],
         ['(target_arch=="arm" and arm_version>=7) or target_arch=="arm64"', {
           'dependencies': ['audio_processing_neon',],
         }],
@@ -223,27 +223,27 @@
         },
       ],
     }],
-    ['target_arch=="ia32" or target_arch=="x64"', {
-      'targets': [
-        {
-          'target_name': 'audio_processing_sse2',
-          'type': 'static_library',
-          'sources': [
-            'aec/aec_core_sse2.c',
-            'aec/aec_rdft_sse2.c',
-          ],
-          'cflags': ['-msse2',],
-          'conditions': [
-            [ 'os_posix == 1', {
-              'cflags_mozilla': ['-msse2',],
-            }],
-          ],
-          'xcode_settings': {
-            'OTHER_CFLAGS': ['-msse2',],
-          },
-        },
-      ],
-    }],
+#    ['target_arch=="ia32" or target_arch=="x64"', {
+#      'targets': [
+#        {
+#          'target_name': 'audio_processing_sse2',
+#          'type': 'static_library',
+#          'sources': [
+#            'aec/aec_core_sse2.c',
+#            'aec/aec_rdft_sse2.c',
+#          ],
+#          'cflags': ['-msse2',],
+#          'conditions': [
+#            [ 'os_posix == 1', {
+#              'cflags_mozilla': ['-msse2',],
+#            }],
+#          ],
+#          'xcode_settings': {
+#            'OTHER_CFLAGS': ['-msse2',],
+#          },
+#        },
+#      ],
+ #   }],
     ['(target_arch=="arm" and arm_version>=7) or target_arch=="arm64"', {
       'targets': [{
         'target_name': 'audio_processing_neon',

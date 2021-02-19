@@ -151,9 +151,9 @@ UNIFIED_SOURCES += [
     'util/uscan.c',
 ]
 
-if CONFIG['INTEL_ARCHITECTURE']:
-    SOURCES += ['nsUTF8ToUnicodeSSE2.cpp']
-    SOURCES['nsUTF8ToUnicodeSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
+#if CONFIG['INTEL_ARCHITECTURE']:
+#    SOURCES += ['nsUTF8ToUnicodeSSE2.cpp']
+#    SOURCES['nsUTF8ToUnicodeSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
 
 LOCAL_INCLUDES += [
     'ucvcn',

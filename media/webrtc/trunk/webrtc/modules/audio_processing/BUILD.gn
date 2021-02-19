@@ -168,9 +168,9 @@ source_set("audio_processing") {
     ]
   }
 
-  if (current_cpu == "x86" || current_cpu == "x64") {
-    deps += [ ":audio_processing_sse2" ]
-  }
+#  if (current_cpu == "x86" || current_cpu == "x64") {
+#    deps += [ ":audio_processing_sse2" ]
+#  }
 
   if (rtc_build_armv7_neon || current_cpu == "arm64") {
     deps += [ ":audio_processing_neon" ]
@@ -216,19 +216,19 @@ if (rtc_enable_protobuf) {
   }
 }
 
-if (current_cpu == "x86" || current_cpu == "x64") {
-  source_set("audio_processing_sse2") {
-    sources = [
-      "aec/aec_core_sse2.c",
-      "aec/aec_rdft_sse2.c",
-    ]
-
-    cflags = [ "-msse2" ]
-
-    configs += [ "../..:common_config" ]
-    public_configs = [ "../..:common_inherited_config" ]
-  }
-}
+#if (current_cpu == "x86" || current_cpu == "x64") {
+#  source_set("audio_processing_sse2") {
+#    sources = [
+#      "aec/aec_core_sse2.c",
+#      "aec/aec_rdft_sse2.c",
+#    ]
+#
+#    cflags = [ "-msse2" ]
+#
+#    configs += [ "../..:common_config" ]
+#    public_configs = [ "../..:common_inherited_config" ]
+#  }
+#}
 
 if (rtc_build_armv7_neon || current_cpu == "arm64") {
   source_set("audio_processing_neon") {

@@ -60,10 +60,10 @@ class VPMContentAnalysis {
   ComputeSpatialMetricsFunc ComputeSpatialMetrics;
   int32_t ComputeSpatialMetrics_C();
 
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+/*#if defined(WEBRTC_ARCH_X86_FAMILY)
   int32_t ComputeSpatialMetrics_SSE2();
   int32_t TemporalDiffMetric_SSE2();
-#endif
+#endif*/
 
   const uint8_t* orig_frame_;
   rtc::scoped_ptr<uint8_t[]> prev_frame_;

@@ -401,9 +401,9 @@ SOURCES += [
 
 # Are we targeting x86-32 or x86-64?  If so, we want to include SSE2 code for
 # nsTextFragment.cpp
-if CONFIG['INTEL_ARCHITECTURE']:
-    SOURCES += ['nsTextFragmentSSE2.cpp']
-    SOURCES['nsTextFragmentSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
+#if CONFIG['INTEL_ARCHITECTURE']:
+#    SOURCES += ['nsTextFragmentSSE2.cpp']
+#    SOURCES['nsTextFragmentSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
 
 EXTRA_COMPONENTS += [
     'contentAreaDropListener.js',

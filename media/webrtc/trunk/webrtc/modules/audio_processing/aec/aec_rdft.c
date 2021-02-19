@@ -571,11 +571,11 @@ void aec_rdft_init(void) {
   cftfsub_128 = cftfsub_128_C;
   cftbsub_128 = cftbsub_128_C;
   bitrv2_128 = bitrv2_128_C;
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+/*#if defined(WEBRTC_ARCH_X86_FAMILY)
   if (WebRtc_GetCPUInfo(kSSE2)) {
     aec_rdft_init_sse2();
   }
-#endif
+#endif*/
 #if defined(MIPS_FPU_LE)
   aec_rdft_init_mips();
 #endif

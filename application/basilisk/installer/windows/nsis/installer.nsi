@@ -1059,7 +1059,7 @@ Function .onInit
   ; Don't install on systems that don't support SSE2. The parameter value of
   ; 10 is for PF_XMMI64_INSTRUCTIONS_AVAILABLE which will check whether the
   ; SSE2 instruction set is available. Result returned in $R7.
-  System::Call "kernel32::IsProcessorFeaturePresent(i 10)i .R7"
+  System::Call "kernel32::IsProcessorFeaturePresent(i 8)i .R7"
 
   ; Windows NT 6.0 and lower are not supported on any architecture.
   ${Unless} ${AtLeastWinXP}

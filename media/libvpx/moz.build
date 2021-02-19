@@ -85,6 +85,8 @@ if CONFIG['OS_TARGET'] == 'Android':
 if CONFIG['CLANG_CL'] or not CONFIG['_MSC_VER']:
     for f in SOURCES:
         if f.endswith('.c'):
+            if 'sse' in f:
+                SOURCES[f].flags += CONFIG['SSE_FLAGS']
             if 'sse2' in f:
                 SOURCES[f].flags += CONFIG['SSE2_FLAGS']
             if 'ssse3' in f:

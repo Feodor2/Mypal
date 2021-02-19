@@ -1585,11 +1585,11 @@ AecCore* WebRtcAec_CreateAec() {
     WebRtcAec_ComfortNoise = ComfortNoise;
     WebRtcAec_SubbandCoherence = SubbandCoherence;
 
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+/*#if defined(WEBRTC_ARCH_X86_FAMILY)
     if (WebRtc_GetCPUInfo(kSSE2)) {
       WebRtcAec_InitAec_SSE2();
     }
-#endif
+#endif*/
 
 #if defined(MIPS_FPU_LE)
     WebRtcAec_InitAec_mips();

@@ -8,7 +8,7 @@
 
 import("../../build/webrtc.gni")
 
-build_video_processing_sse2 = current_cpu == "x86" || current_cpu == "x64"
+#build_video_processing_sse2 = current_cpu == "x86" || current_cpu == "x64"
 
 source_set("video_processing") {
   sources = [
@@ -41,9 +41,9 @@ source_set("video_processing") {
     "../../modules/utility",
     "../../system_wrappers",
   ]
-  if (build_video_processing_sse2) {
-    deps += [ ":video_processing_sse2" ]
-  }
+#  if (build_video_processing_sse2) {
+#    deps += [ ":video_processing_sse2" ]
+#  }
 
   configs += [ "../..:common_config" ]
   public_configs = [ "../..:common_inherited_config" ]
@@ -55,21 +55,21 @@ source_set("video_processing") {
   }
 }
 
-if (build_video_processing_sse2) {
-  source_set("video_processing_sse2") {
-    sources = [ "main/source/content_analysis_sse2.cc" ]
-
-    configs += [ "../..:common_config" ]
-    public_configs = [ "../..:common_inherited_config" ]
-
-    if (is_clang) {
-      # Suppress warnings from Chrome's Clang plugins.
-      # See http://code.google.com/p/webrtc/issues/detail?id=163 for details.
-      configs -= [ "//build/config/clang:find_bad_constructs" ]
-    }
-
-    if (is_posix) {
-      cflags = [ "-msse2" ]
-    }
-  }
-}
+#if (build_video_processing_sse2) {
+#  source_set("video_processing_sse2") {
+#    sources = [ "main/source/content_analysis_sse2.cc" ]
+#
+#    configs += [ "../..:common_config" ]
+#    public_configs = [ "../..:common_inherited_config" ]
+#
+#    if (is_clang) {
+#      # Suppress warnings from Chrome's Clang plugins.
+#      # See http://code.google.com/p/webrtc/issues/detail?id=163 for details.
+#      configs -= [ "//build/config/clang:find_bad_constructs" ]
+#    }
+#
+#    if (is_posix) {
+#      cflags = [ "-msse2" ]
+#    }
+#  }
+#}

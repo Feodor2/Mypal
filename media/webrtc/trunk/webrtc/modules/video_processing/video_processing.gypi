@@ -40,36 +40,36 @@
         'main/source/video_processing_impl.cc',
         'main/source/video_processing_impl.h',
       ],
-      'conditions': [
-        ['target_arch=="ia32" or target_arch=="x64"', {
-          'dependencies': [ 'video_processing_sse2', ],
-        }],
-      ],
+#      'conditions': [
+#        ['target_arch=="ia32" or target_arch=="x64"', {
+#          'dependencies': [ 'video_processing_sse2', ],
+#        }],
+#      ],
     },
   ],
-  'conditions': [
-    ['target_arch=="ia32" or target_arch=="x64"', {
-      'targets': [
-        {
-          'target_name': 'video_processing_sse2',
-          'type': 'static_library',
-          'sources': [
-            'main/source/content_analysis_sse2.cc',
-          ],
-          'conditions': [
-            ['os_posix==1 and OS!="mac"', {
-              'cflags': [ '-msse2', ],
-              'cflags_mozilla': [ '-msse2', ],
-            }],
-            ['OS=="mac"', {
-              'xcode_settings': {
-                'OTHER_CFLAGS': [ '-msse2', ],
-              },
-            }],
-          ],
-        },
-      ],
-    }],
-  ],
+#  'conditions': [
+#    ['target_arch=="ia32" or target_arch=="x64"', {
+#      'targets': [
+#        {
+#          'target_name': 'video_processing_sse2',
+#          'type': 'static_library',
+#          'sources': [
+#            'main/source/content_analysis_sse2.cc',
+#          ],
+#          'conditions': [
+#            ['os_posix==1 and OS!="mac"', {
+#              'cflags': [ '-msse2', ],
+#              'cflags_mozilla': [ '-msse2', ],
+#            }],
+#            ['OS=="mac"', {
+#              'xcode_settings': {
+#                'OTHER_CFLAGS': [ '-msse2', ],
+#              },
+#            }],
+#          ],
+#        },
+#      ],
+#    }],
+#  ],
 }
 

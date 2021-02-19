@@ -235,20 +235,20 @@ void FilterRows_MMX(uint8* ybuf, const uint8* y0_ptr, const uint8* y1_ptr,
                     int source_width, int source_y_fraction);
 #endif
 
-#ifdef MOZILLA_MAY_SUPPORT_SSE2
+/*#ifdef MOZILLA_MAY_SUPPORT_SSE2
 void FilterRows_SSE2(uint8* ybuf, const uint8* y0_ptr, const uint8* y1_ptr,
                      int source_width, int source_y_fraction);
-#endif
+#endif*/
 
 static inline void FilterRows(uint8* ybuf, const uint8* y0_ptr,
                               const uint8* y1_ptr, int source_width,
                               int source_y_fraction) {
-#ifdef MOZILLA_MAY_SUPPORT_SSE2
+/*#ifdef MOZILLA_MAY_SUPPORT_SSE2
   if (mozilla::supports_sse2()) {
     FilterRows_SSE2(ybuf, y0_ptr, y1_ptr, source_width, source_y_fraction);
     return;
   }
-#endif
+#endif*/
 
 #ifdef MOZILLA_MAY_SUPPORT_MMX
   if (mozilla::supports_mmx()) {

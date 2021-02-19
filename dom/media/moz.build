@@ -19,7 +19,7 @@ with Files('GetUserMedia*'):
     BUG_COMPONENT = component_av
 
 DIRS += [
-    'encoder',
+#    'encoder',
     'flac',
     'imagecapture',
     'ipc',
@@ -112,7 +112,7 @@ EXPORTS += [
     'MediaMetadataManager.h',
     'MediaPrefs.h',
     'MediaQueue.h',
-    'MediaRecorder.h',
+#    'MediaRecorder.h',
     'MediaResource.h',
     'MediaResourceCallback.h',
     'MediaResult.h',
@@ -222,7 +222,7 @@ SOURCES += [
     'MediaInfo.cpp',
     'MediaManager.cpp',
     'MediaPrefs.cpp',
-    'MediaRecorder.cpp',
+#    'MediaRecorder.cpp',
     'MediaResource.cpp',
     'MediaShutdownManager.cpp',
     'MediaStreamError.cpp',

@@ -286,7 +286,7 @@ WEBIDL_FILES = [
     'MediaError.webidl',
     'MediaList.webidl',
     'MediaQueryList.webidl',
-    'MediaRecorder.webidl',
+#    'MediaRecorder.webidl',
     'MediaSource.webidl',
     'MediaStream.webidl',
     'MediaStreamAudioDestinationNode.webidl',

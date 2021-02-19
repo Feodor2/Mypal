@@ -426,9 +426,9 @@ NS_EVENT_MESSAGE(eNetworkUpload)
 NS_EVENT_MESSAGE(eNetworkDownload)
 
 // MediaRecorder events.
-NS_EVENT_MESSAGE(eMediaRecorderDataAvailable)
-NS_EVENT_MESSAGE(eMediaRecorderWarning)
-NS_EVENT_MESSAGE(eMediaRecorderStop)
+//NS_EVENT_MESSAGE(eMediaRecorderDataAvailable)
+//NS_EVENT_MESSAGE(eMediaRecorderWarning)
+//NS_EVENT_MESSAGE(eMediaRecorderStop)
 
 // SpeakerManager events
 NS_EVENT_MESSAGE(eSpeakerForcedChange)

@@ -16,13 +16,13 @@ SOURCES += [
     'WebMDemuxer.cpp',
 ]
 
-if CONFIG['MOZ_WEBM_ENCODER']:
-    EXPORTS += ['WebMWriter.h']
+#if CONFIG['MOZ_WEBM_ENCODER']:
+#    EXPORTS += ['WebMWriter.h']
 
-    SOURCES += [
-        'EbmlComposer.cpp',
-        'WebMWriter.cpp',
-    ]
+#    SOURCES += [
+#        'EbmlComposer.cpp',
+#        'WebMWriter.cpp',
+#    ]
 
 CXXFLAGS += CONFIG['MOZ_LIBVPX_CFLAGS']
 

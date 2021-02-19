@@ -4624,14 +4624,14 @@ pref("gfx.xrender.enabled", true);
 pref("gfx.content.use-native-pushlayer", true);
 
 // Whether to disable the automatic detection and use of direct2d.
-pref("gfx.direct2d.disabled", false);
+pref("gfx.direct2d.disabled", true);
 
 // Whether to attempt to enable Direct2D regardless of automatic detection or
 // blacklisting
 pref("gfx.direct2d.force-enabled", false);
 
 pref("layers.prefer-opengl", false);
-pref("layers.prefer-d3d9", false);
+pref("layers.prefer-d3d9", true);
 // Enable fallback if d3d11 can't be used. See bug #1262187
 pref("layers.allow-d3d9-fallback", true);
 #endif

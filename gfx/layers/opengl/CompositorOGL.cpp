@@ -110,7 +110,6 @@ already_AddRefed<mozilla::gl::GLContext>
 CompositorOGL::CreateContext()
 {
   RefPtr<GLContext> context;
-
   // Used by mock widget to create an offscreen context
   nsIWidget* widget = mWidget->RealWidget();
   void* widgetOpenGLContext = widget ? widget->GetNativeData(NS_NATIVE_OPENGL_CONTEXT) : nullptr;

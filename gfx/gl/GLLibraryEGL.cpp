@@ -459,7 +459,8 @@ GLLibraryEGL::EnsureInitialized(bool forceAccel, nsACString* const out_failureId
 
     if (IsExtensionSupported(ANGLE_platform_angle_d3d)) {
         nsCString accelAngleFailureId;
-        bool accelAngleSupport = IsAccelAngleSupported(gfxInfo, &accelAngleFailureId);
+        //bool accelAngleSupport = IsAccelAngleSupported(gfxInfo, &accelAngleFailureId);
+        bool accelAngleSupport = true;
         bool shouldTryAccel = forceAccel || accelAngleSupport;
         bool shouldTryWARP = !forceAccel; // Only if ANGLE not supported or fails
 

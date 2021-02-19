@@ -3529,8 +3529,8 @@ void* nsWindow::GetNativeData(uint32_t aDataType)
     case NS_NATIVE_SHAREABLE_WINDOW:
       return (void*) WinUtils::GetTopLevelHWND(mWnd);
     case NS_NATIVE_GRAPHIC:
-      MOZ_ASSERT_UNREACHABLE("Not supported on Windows:");
-      return nullptr;
+      if(mBasicLayersSurface) return mBasicLayersSurface->GetWindowSurface();
+      return ::GetDC(mWnd);
     case NS_RAW_NATIVE_IME_CONTEXT: {
       void* pseudoIMEContext = GetPseudoIMEContext();
       if (pseudoIMEContext) {

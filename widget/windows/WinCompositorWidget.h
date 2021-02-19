@@ -86,10 +86,10 @@ public:
 
   mozilla::Mutex& GetTransparentSurfaceLock() { return mTransparentSurfaceLock; }
 
-private:
   HDC GetWindowSurface();
   void FreeWindowSurface(HDC dc);
 
+private:
   void CreateTransparentSurface(const gfx::IntSize& aSize);
 
 private:

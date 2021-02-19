@@ -2003,16 +2003,12 @@ gfxWindowsPlatform::GetAcceleratedCompositorBackends(nsTArray<LayersBackend>& aB
     aBackends.AppendElement(LayersBackend::LAYERS_OPENGL);
   }
 
-  if (gfxConfig::IsEnabled(Feature::D3D9_COMPOSITING) && gfxPrefs::LayersPreferD3D9()) {
+  else if (gfxConfig::IsEnabled(Feature::D3D9_COMPOSITING) && gfxPrefs::LayersPreferD3D9()) {
     aBackends.AppendElement(LayersBackend::LAYERS_D3D9);
   }
 
-  if (gfxConfig::IsEnabled(Feature::D3D11_COMPOSITING)) {
+  else if (gfxConfig::IsEnabled(Feature::D3D11_COMPOSITING)) {
     aBackends.AppendElement(LayersBackend::LAYERS_D3D11);
-  }
-
-  if (gfxConfig::IsEnabled(Feature::D3D9_COMPOSITING) && !gfxPrefs::LayersPreferD3D9()) {
-    aBackends.AppendElement(LayersBackend::LAYERS_D3D9);
   }
 }
 

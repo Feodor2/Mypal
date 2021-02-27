@@ -123,6 +123,9 @@ private:
 #ifdef MOZ_FFVPX
   DECL_MEDIA_PREF("media.ffvpx.enabled",                      PDMFFVPXEnabled, bool, true);
 #endif
+#if defined(MOZ_FFVPX) || defined(MOZ_FFMPEG)
+  DECL_MEDIA_PREF("media.ffmpeg.hwacc_type",                  FFmpegHwaccType, uint32_t, 0);
+#endif
 #ifdef MOZ_AV1
   DECL_MEDIA_PREF("media.av1.enabled",                        AV1Enabled, bool, false);
 #endif

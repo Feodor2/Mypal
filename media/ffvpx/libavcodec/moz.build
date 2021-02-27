@@ -39,6 +39,10 @@ SOURCES += [
     'decode.c',
     'dirac.c',
     'dv_profile.c',
+    'dxva2.c',
+    'dxva2_h264.c',
+    'dxva2_hevc.c',
+    'dxva2_vp9.c',
     'encode.c',
     'error_resilience.c',
     'faandct.c',
@@ -180,5 +184,7 @@ if CONFIG['GNU_CC'] and CONFIG['CC_VERSION'] >= '10.0.0':
 USE_LIBS += [
      'mozavutil'
 ]
+
+OS_LIBS += ['ole32']
 
 include("../ffvpxcommon.mozbuild")

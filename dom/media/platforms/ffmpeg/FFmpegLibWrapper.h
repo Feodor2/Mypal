@@ -15,6 +15,8 @@ struct AVPacket;
 struct AVDictionary;
 struct AVCodecParserContext;
 struct PRLibrary;
+struct AVBufferRef;
+struct AVDictionary;
 
 namespace mozilla
 {
@@ -79,6 +81,10 @@ struct FFmpegLibWrapper
   void (*av_log_set_level)(int level);
   void*	(*av_malloc)(size_t size);
   void (*av_freep)(void *ptr);
+  AVBufferRef* (*av_buffer_ref)(AVBufferRef* buf);
+  void (*av_buffer_unref)(AVBufferRef** buf);
+  int (*av_hwdevice_ctx_create)(AVBufferRef **device_ctx, int type,
+                           const char *device, AVDictionary *opts, int flags);
 
   // libavutil v55 and later only
   AVFrame* (*av_frame_alloc)();
@@ -90,6 +96,7 @@ struct FFmpegLibWrapper
 
   PRLibrary* mAVCodecLib;
   PRLibrary* mAVUtilLib;
+  AVBufferRef* mdev_ctx;
 
 private:
 };

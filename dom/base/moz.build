@@ -1,0 +1,493 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+with Files('*Selection*'):
+    BUG_COMPONENT = ('Core', 'Selection')
+
+with Files("**"):
+    BUG_COMPONENT = ("Core", "DOM")
+
+TEST_DIRS += ['test']
+
+XPIDL_SOURCES += [
+    'mozIDOMWindow.idl',
+    'nsIContentPolicy.idl',
+    'nsIContentPolicyBase.idl',
+    'nsIDocumentEncoder.idl',
+    'nsIDOMDataChannel.idl',
+    'nsIDOMDOMCursor.idl',
+    'nsIDOMDOMRequest.idl',
+    'nsIDOMFormData.idl',
+    'nsIDOMParser.idl',
+    'nsIDOMSerializer.idl',
+    'nsIDroppedLinkHandler.idl',
+    'nsIFrameLoader.idl',
+    'nsIImageLoadingContent.idl',
+    'nsIMessageManager.idl',
+    'nsIObjectLoadingContent.idl',
+    'nsIRemoteWindowContext.idl',
+    'nsIScriptChannel.idl',
+    'nsISelection.idl',
+    'nsISelectionController.idl',
+    'nsISelectionDisplay.idl',
+    'nsISelectionListener.idl',
+    'nsISelectionPrivate.idl',
+    'nsISimpleContentPolicy.idl',
+    'nsISlowScriptDebug.idl',
+]
+
+XPIDL_MODULE = 'dom'
+
+EXPORTS += [
+    'AutocompleteFieldList.h',
+    'Crypto.h',
+    'HTMLSplitOnSpacesTokenizer.h',
+    'IframeSandboxKeywordList.h',
+    'mozAutoDocUpdate.h',
+    'nsAtomListUtils.h',
+    'nsAttrAndChildArray.h',
+    'nsAttrName.h',
+    'nsAttrValue.h',
+    'nsAttrValueInlines.h',
+    'nsCaseTreatment.h',
+    'nsChildContentList.h',
+    'nsContentCID.h',
+    'nsContentCreatorFunctions.h',
+    'nsContentList.h',
+    'nsContentListDeclarations.h',
+    'nsContentPermissionHelper.h',
+    'nsContentPolicyUtils.h',
+    'nsContentSink.h',
+    'nsContentTypeParser.h',
+    'nsContentUtils.h',
+    'nsCopySupport.h',
+    'nsDeprecatedOperationList.h',
+    'nsDocElementCreatedNotificationRunner.h',
+    'nsDocumentWarningList.h',
+    'nsDOMAttributeMap.h',
+    'nsDOMCID.h',
+    'nsDOMClassInfoID.h',
+    'nsDOMJSUtils.h',
+    'nsDOMNavigationTiming.h',
+    'nsDOMString.h',
+    'nsFocusManager.h',
+    'nsFrameMessageManager.h',
+    'nsGenericDOMDataNode.h',
+    'nsGkAtomList.h',
+    'nsGkAtoms.h',
+    'nsIAnimationObserver.h',
+    'nsIAttribute.h',
+    'nsIContent.h',
+    'nsIContentInlines.h',
+    'nsIContentIterator.h',
+    'nsIContentSerializer.h',
+    'nsIdentifierMapEntry.h',
+    'nsIDocument.h',
+    'nsIDocumentInlines.h',
+    'nsIDocumentObserver.h',
+    'nsIDOMClassInfo.h',
+    'nsIGlobalObject.h',
+    'nsImageLoadingContent.h',
+    'nsIMutationObserver.h',
+    'nsINode.h',
+    'nsINodeList.h',
+    'nsIScriptContext.h',
+    'nsIScriptGlobalObject.h',
+    'nsIScriptNameSpaceManager.h',
+    'nsIScriptObjectPrincipal.h',
+    'nsIScriptTimeoutHandler.h',
+    'nsIStyleSheetLinkingElement.h',
+    'nsITimeoutHandler.h',
+    'nsJSEnvironment.h',
+    'nsJSUtils.h',
+    'nsLineBreaker.h',
+    'nsMappedAttributeElement.h',
+    'nsNameSpaceManager.h',
+    'nsNodeInfoManager.h',
+    'nsNodeUtils.h',
+    'nsPIDOMWindow.h',
+    'nsPIDOMWindowInlines.h',
+    'nsPIWindowRoot.h',
+    'nsPropertyTable.h',
+    'nsRange.h',
+    'nsReferencedElement.h',
+    'nsSandboxFlags.h',
+    'nsStructuredCloneContainer.h',
+    'nsStubAnimationObserver.h',
+    'nsStubDocumentObserver.h',
+    'nsStubMutationObserver.h',
+    'nsStyledElement.h',
+    'nsTextFragment.h',
+    'nsTraversal.h',
+    'nsTreeSanitizer.h',
+    'nsViewportInfo.h',
+    'nsWindowMemoryReporter.h',
+    'nsWrapperCache.h',
+    'nsWrapperCacheInlines.h',
+    'nsXMLNameSpaceMap.h',
+    'XPathGenerator.h',
+]
+
+if CONFIG['MOZ_WEBRTC']:
+    EXPORTS += [
+        'nsDOMDataChannel.h',
+        'nsDOMDataChannelDeclarations.h',
+    ]
+
+EXPORTS.mozilla += [
+    'CORSMode.h',
+    'FeedWriterEnabled.h',
+    'FlushType.h',
+    'TextInputProcessor.h',
+    'UseCounter.h',
+]
+
+EXPORTS.mozilla.dom += [
+    '!UseCounterList.h',
+    'AnonymousContent.h',
+    'Attr.h',
+    'BarProps.h',
+    'BodyUtil.h',
+    'BorrowedAttrInfo.h',
+    'ChildIterator.h',
+    'ChromeNodeList.h',
+    'ChromeUtils.h',
+    'Comment.h',
+    'CustomElementRegistry.h',
+    'DirectionalityUtils.h',
+    'DispatcherTrait.h',
+    'DocGroup.h',
+    'DocumentFragment.h',
+    'DocumentType.h',
+    'DOMCursor.h',
+    'DOMError.h',
+    'DOMException.h',
+    'DOMImplementation.h',
+    'DOMIntersectionObserver.h',
+    'DOMMatrix.h',
+    'DOMParser.h',
+    'DOMPoint.h',
+    'DOMQuad.h',
+    'DOMRect.h',
+    'DOMRequest.h',
+    'DOMStringList.h',
+    'DOMTokenListSupportedTokens.h',
+    'Element.h',
+    'ElementInlines.h',
+    'EventSource.h',
+    'FormData.h',
+    'FragmentOrElement.h',
+    'FromParser.h',
+    'GroupedSHistory.h',
+    'IdleDeadline.h',
+    'IdleRequest.h',
+    'ImageEncoder.h',
+    'ImageTracker.h',
+    'Link.h',
+    'Location.h',
+    'NameSpaceConstants.h',
+    'Navigator.h',
+    'NodeInfo.h',
+    'NodeInfoInlines.h',
+    'NodeIterator.h',
+    'PartialSHistory.h',
+    'Pose.h',
+    'ProcessGlobal.h',
+    'ResponsiveImageSelector.h',
+    'SameProcessMessageQueue.h',
+    'ScreenOrientation.h',
+    'Selection.h',
+    'ShadowRoot.h',
+    'StructuredCloneBlob.h',
+    'StructuredCloneHolder.h',
+    'StructuredCloneTags.h',
+    'StyleSheetList.h',
+    'SubtleCrypto.h',
+    'TabGroup.h',
+    'Text.h',
+    'Timeout.h',
+    'TimeoutHandler.h',
+    'TimeoutManager.h',
+    'TreeWalker.h',
+    'WebKitCSSMatrix.h',
+    'WebSocket.h',
+    'WindowOrientationObserver.h',
+]
+
+if CONFIG['FUZZING']:
+    EXPORTS.mozilla.dom += [
+        'FuzzingFunctions.h',
+    ]
+
+UNIFIED_SOURCES += [
+    'AnonymousContent.cpp',
+    'Attr.cpp',
+    'BarProps.cpp',
+    'BodyUtil.cpp',
+    'BorrowedAttrInfo.cpp',
+    'ChildIterator.cpp',
+    'ChromeNodeList.cpp',
+    'ChromeUtils.cpp',
+    'Comment.cpp',
+    'Crypto.cpp',
+    'CustomElementRegistry.cpp',
+    'DirectionalityUtils.cpp',
+    'DispatcherTrait.cpp',
+    'DocGroup.cpp',
+    'DocumentFragment.cpp',
+    'DocumentType.cpp',
+    'DOMCursor.cpp',
+    'DOMError.cpp',
+    'DOMException.cpp',
+    'DOMImplementation.cpp',
+    'DOMMatrix.cpp',
+    'DOMParser.cpp',
+    'DOMPoint.cpp',
+    'DOMQuad.cpp',
+    'DOMRect.cpp',
+    'DOMRequest.cpp',
+    'DOMStringList.cpp',
+    'Element.cpp',
+    'EventSource.cpp',
+    'FormData.cpp',
+    'FragmentOrElement.cpp',
+    'GroupedSHistory.cpp',
+    'IdleDeadline.cpp',
+    'IdleRequest.cpp',
+    'ImageEncoder.cpp',
+    'ImageTracker.cpp',
+    'Link.cpp',
+    'Location.cpp',
+    'Navigator.cpp',
+    'NodeInfo.cpp',
+    'NodeIterator.cpp',
+    'nsAtomListUtils.cpp',
+    'nsAttrAndChildArray.cpp',
+    'nsAttrValue.cpp',
+    'nsAttrValueOrString.cpp',
+    'nsCCUncollectableMarker.cpp',
+    'nsContentAreaDragDrop.cpp',
+    'nsContentIterator.cpp',
+    'nsContentList.cpp',
+    'nsContentPermissionHelper.cpp',
+    'nsContentPolicy.cpp',
+    'nsContentSink.cpp',
+    'nsCopySupport.cpp',
+    'nsDataDocumentContentPolicy.cpp',
+    'nsDocument.cpp',
+    'nsDocumentEncoder.cpp',
+    'nsDOMAttributeMap.cpp',
+    'nsDOMCaretPosition.cpp',
+    'nsDOMClassInfo.cpp',
+    'nsDOMMutationObserver.cpp',
+    'nsDOMNavigationTiming.cpp',
+    'nsDOMSerializer.cpp',
+    'nsDOMTokenList.cpp',
+    'nsDOMWindowList.cpp',
+    'nsFocusManager.cpp',
+    'nsFrameLoader.cpp',
+    'nsGenConImageContent.cpp',
+    'nsGenericDOMDataNode.cpp',
+    'nsGkAtoms.cpp',
+    'nsGlobalWindowCommands.cpp',
+    'nsHistory.cpp',
+    'nsHTMLContentSerializer.cpp',
+    'nsIGlobalObject.cpp',
+    'nsINode.cpp',
+    'nsInProcessTabChildGlobal.cpp',
+    'nsJSEnvironment.cpp',
+    'nsJSTimeoutHandler.cpp',
+    'nsJSUtils.cpp',
+    'nsLineBreaker.cpp',
+    'nsMappedAttributeElement.cpp',
+    'nsMappedAttributes.cpp',
+    'nsMimeTypeArray.cpp',
+    'nsNameSpaceManager.cpp',
+    'nsNoDataProtocolContentPolicy.cpp',
+    'nsNodeInfoManager.cpp',
+    'nsNodeUtils.cpp',
+    'nsOpenURIInFrameParams.cpp',
+    'nsPlainTextSerializer.cpp',
+    'nsPropertyTable.cpp',
+    'nsQueryContentEventResult.cpp',
+    'nsRange.cpp',
+    'nsReferencedElement.cpp',
+    'nsScreen.cpp',
+    'nsScriptNameSpaceManager.cpp',
+    'nsStructuredCloneContainer.cpp',
+    'nsStubAnimationObserver.cpp',
+    'nsStubDocumentObserver.cpp',
+    'nsStubMutationObserver.cpp',
+    'nsStyledElement.cpp',
+    'nsStyleLinkElement.cpp',
+    'nsSyncLoadService.cpp',
+    'nsTextFragment.cpp',
+    'nsTextNode.cpp',
+    'nsTraversal.cpp',
+    'nsTreeSanitizer.cpp',
+    'nsViewportInfo.cpp',
+    'nsWindowMemoryReporter.cpp',
+    'nsWindowRoot.cpp',
+    'nsWrapperCache.cpp',
+    'nsXHTMLContentSerializer.cpp',
+    'nsXMLContentSerializer.cpp',
+    'nsXMLNameSpaceMap.cpp',
+    'PartialSHistory.cpp',
+    'Pose.cpp',
+    'PostMessageEvent.cpp',
+    'ProcessGlobal.cpp',
+    'ResponsiveImageSelector.cpp',
+    'SameProcessMessageQueue.cpp',
+    'ScreenOrientation.cpp',
+    'Selection.cpp',
+    'SelectionChangeListener.cpp',
+    'ShadowRoot.cpp',
+    'StructuredCloneBlob.cpp',
+    'StructuredCloneHolder.cpp',
+    'StyleSheetList.cpp',
+    'SubtleCrypto.cpp',
+    'TabGroup.cpp',
+    'Text.cpp',
+    'TextInputProcessor.cpp',
+    'ThirdPartyUtil.cpp',
+    'Timeout.cpp',
+    'TimeoutBudgetManager.cpp',
+    'TimeoutExecutor.cpp',
+    'TimeoutHandler.cpp',
+    'TimeoutManager.cpp',
+    'TreeWalker.cpp',
+    'WebKitCSSMatrix.cpp',
+    'WebSocket.cpp',
+    'WindowNamedPropertiesHandler.cpp',
+    'WindowOrientationObserver.cpp',
+    'XPathGenerator.cpp',
+]
+
+if CONFIG['MOZ_WEBRTC']:
+    UNIFIED_SOURCES += [
+        'nsDOMDataChannel.cpp',
+    ]
+
+if CONFIG['FUZZING']:
+    UNIFIED_SOURCES += [
+        'FuzzingFunctions.cpp',
+    ]
+
+if CONFIG['ENABLE_INTL_API']:
+    UNIFIED_SOURCES += [
+        'IntlUtils.cpp',
+    ]
+    EXPORTS.mozilla.dom += [
+        'IntlUtils.h',
+    ]
+
+# these files couldn't be in UNIFIED_SOURCES for now for reasons given below:
+SOURCES += [
+    # Several conflicts with other bindings.
+    'DOMIntersectionObserver.cpp',
+    # Because of OS X headers.
+    'nsContentUtils.cpp',
+    # this file doesn't like windows.h
+    'nsDOMWindowUtils.cpp',
+    # Conflicts with windows.h's definition of SendMessage.
+    'nsFrameMessageManager.cpp',
+    # This file has a #error "Never include windows.h in this file!"
+    'nsGlobalWindow.cpp',
+    # Conflicts with windows.h's definition of LoadImage.
+    'nsImageLoadingContent.cpp',
+    # Because of OS X headers.
+    'nsObjectLoadingContent.cpp',
+    # nsPluginArray.cpp includes npapi.h indirectly, and that includes a lot of system headers
+    'nsPluginArray.cpp',
+]
+
+# Are we targeting x86-32 or x86-64?  If so, we want to include SSE2 code for
+# nsTextFragment.cpp
+if CONFIG['INTEL_ARCHITECTURE']:
+    SOURCES += ['nsTextFragmentSSE2.cpp']
+    SOURCES['nsTextFragmentSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
+
+EXTRA_COMPONENTS += [
+    'contentAreaDropListener.js',
+    'contentAreaDropListener.manifest',
+    'ProcessSelector.js',
+    'ProcessSelector.manifest',
+    'SlowScriptDebug.js',
+    'SlowScriptDebug.manifest',
+]
+
+EXTRA_JS_MODULES += [
+    'DOMRequestHelper.jsm',
+    'IndexedDBHelper.jsm',
+]
+
+LOCAL_INCLUDES += [
+    '../battery',
+    '../events',
+    '../media',
+    '../network',
+    '../time',
+    '/caps',
+    '/docshell/base',
+    '/dom/base',
+    '/dom/file',
+    '/dom/geolocation',
+    '/dom/html',
+    '/dom/ipc',
+    '/dom/storage',
+    '/dom/svg',
+    '/dom/u2f',
+    '/dom/workers',
+    '/dom/xbl',
+    '/dom/xml',
+    '/dom/xslt/xpath',
+    '/dom/xul',
+    '/gfx/2d',
+    '/image',
+    '/js/xpconnect/src',
+    '/js/xpconnect/wrappers',
+    '/layout/base',
+    '/layout/forms',
+    '/layout/generic',
+    '/layout/style',
+    '/layout/svg',
+    '/layout/xul',
+    '/netwerk/base',
+    '/security/manager/ssl',
+    '/widget',
+    '/xpcom/ds',
+]
+
+if CONFIG['MOZ_WEBRTC']:
+    LOCAL_INCLUDES += [
+        '/netwerk/sctp/datachannel',
+    ]
+
+include('/ipc/chromium/chromium-config.mozbuild')
+
+FINAL_LIBRARY = 'xul'
+
+if CONFIG['MOZ_BUILD_APP'] in ['browser', 'mobile/android', 'xulrunner']:
+    DEFINES['HAVE_SIDEBAR'] = True
+
+if CONFIG['MOZ_X11']:
+    CXXFLAGS += CONFIG['TK_CFLAGS']
+
+GENERATED_FILES += [
+    'PropertyUseCounterMap.inc',
+    'UseCounterList.h',
+]
+
+countermap = GENERATED_FILES['PropertyUseCounterMap.inc']
+countermap.script = 'gen-usecounters.py:property_map'
+countermap.inputs = ['UseCounters.conf']
+
+counterlist = GENERATED_FILES['UseCounterList.h']
+counterlist.script = 'gen-usecounters.py:use_counter_list'
+counterlist.inputs = ['UseCounters.conf']
+
+if CONFIG['GNU_CXX']:
+    CXXFLAGS += ['-Wno-error=shadow']

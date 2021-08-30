@@ -1,0 +1,6 @@
+category webextension-scripts browser chrome://browser/content/ext-browser.js
+category webextension-scripts utils chrome://browser/content/ext-utils.js
+category webextension-scripts-devtools browser chrome://browser/content/ext-c-browser.js
+category webextension-scripts-addon browser chrome://browser/content/ext-c-browser.js
+
+category webextension-schemas menus_internal chrome://browser/content/schemas/menus_internal.json

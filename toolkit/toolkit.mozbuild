@@ -1,0 +1,183 @@
+# -*- Mode: python; c-basic-offset: 4; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+DIRS += [
+    '/toolkit/library/gtest/rust',
+    '/toolkit/library/rust',
+]
+
+if CONFIG['MOZ_SANDBOX']:
+    DIRS += ['/security/sandbox']
+
+DIRS += [
+    # Depends on NSS and NSPR, and must be built after sandbox or else B2G emulator
+    # builds fail.
+    '/security/certverifier',
+    # Depends on certverifier
+    '/security/apps',
+]
+
+# the signing related bits of libmar depend on nss
+if CONFIG['MOZ_UPDATER']:
+    DIRS += ['/modules/libmar']
+
+DIRS += [
+    '/config/external/freetype2',
+    '/xpcom',
+    '/modules/libpref',
+    '/intl',
+    '/netwerk',
+]
+
+if CONFIG['MOZ_AUTH_EXTENSION']:
+    DIRS += ['/extensions/auth']
+
+if CONFIG['MOZ_UPDATER']:
+    DIRS += ['/other-licenses/bsdiff']
+
+# Gecko/Core components.
+
+DIRS += [
+    '/ipc',
+    '/js/ipc',
+    '/hal',
+    '/js/xpconnect',
+    '/intl/chardet',
+    '/modules/libjar',
+    '/storage',
+]
+
+if CONFIG['COMPILE_ENVIRONMENT']:
+    DIRS += [
+        '/media/libyuv',
+    ]
+
+if CONFIG['MOZ_PERMISSIONS']:
+    DIRS += [
+        '/extensions/cookie',
+        '/extensions/permissions',
+    ]
+
+DIRS += [
+    '/rdf',
+]
+
+if CONFIG['MOZ_WEBRTC'] and CONFIG['COMPILE_ENVIRONMENT']:
+    DIRS += [
+        '/media/webrtc',
+        '/media/mtransport',
+    ]
+
+if CONFIG['ENABLE_TESTS']:
+    DIRS += ['/testing/specialpowers']
+
+DIRS += [
+    '/testing/gtest',
+    '/uriloader',
+    '/caps',
+    '/parser',
+    '/gfx',
+    '/image',
+    '/dom',
+    '/view',
+    '/widget',
+    '/editor',
+    '/layout',
+    '/docshell',
+    '/xpfe/appshell'
+]
+
+if CONFIG['MOZ_UNIVERSALCHARDET']:
+    DIRS += ['/extensions/universalchardet']
+
+if CONFIG['ACCESSIBILITY']:
+    DIRS += ['/accessible']
+else:
+    DIRS += ['/accessible/ipc']
+
+# toolkit
+
+# This must precede xpfe.
+if CONFIG['MOZ_JPROF']:
+    DIRS += ['/tools/jprof']
+
+DIRS += [
+    '/tools/code-coverage',
+    '/tools/power',
+    '/tools/profiler',
+    '/tools/memory-profiler',
+    '/xpfe/components',
+]
+
+if CONFIG['MOZ_ENABLE_XREMOTE']:
+    DIRS += ['/widget/xremoteclient']
+
+if CONFIG['MOZ_SPELLCHECK']:
+    DIRS += ['/extensions/spellcheck']
+
+DIRS += [
+    '/security/manager',
+    '/toolkit',
+]
+
+if CONFIG['MOZ_PREF_EXTENSIONS']:
+    DIRS += ['/extensions/pref']
+
+DIRS += [
+    '/devtools',
+    '/toolkit/library',
+    '/toolkit/library/StaticXULComponentsEnd',
+    '/services',
+    '/startupcache',
+    '/js/ductwork/debugger',
+    '/other-licenses/snappy',
+]
+
+if 'gtk' in CONFIG['MOZ_WIDGET_TOOLKIT']:
+    DIRS += ['/toolkit/system/gnome']
+
+DIRS += ['/addon-sdk']
+
+if CONFIG['ENABLE_MARIONETTE']:
+    DIRS += [
+        '/testing/firefox-ui',
+        '/testing/marionette',
+    ]
+
+if CONFIG['ENABLE_GECKODRIVER']:
+    DIRS += ['/testing/geckodriver']
+
+DIRS += [
+    '/tools/quitter',
+    '/media/gmp-clearkey/0.1',
+]
+
+if CONFIG['ENABLE_TESTS']:
+    DIRS += [
+        '/testing/mochitest',
+        '/testing/xpcshell',
+        '/testing/tools/minidumpwriter',
+        '/testing/tools/screenshot',
+        '/testing/profiles',
+        '/testing/modules',
+        '/testing/runtimes',
+        '/testing/web-platform',
+    ]
+
+    # The file id utility requires breakpad libraries.
+    if CONFIG['MOZ_CRASHREPORTER']:
+        DIRS += ['/testing/tools/fileid']
+
+    if CONFIG['MOZ_MEMORY']:
+        DIRS += ['/memory/gtest']
+
+    if CONFIG['MOZ_WEBRTC'] and not CONFIG['MOZ_TASK_TRACER']:
+        DIRS += [
+            '/media/mtransport/test',
+        ]
+
+if CONFIG['FUZZING']:
+    DIRS += ['/tools/fuzzing']

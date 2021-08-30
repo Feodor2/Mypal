@@ -1,0 +1,23 @@
+<html class="reftest-wait">
+<head>
+<title>Crash [@ nsFocusManager::GetCommonAncestor], part 2</title>
+</head>
+<body>
+<iframe src="file_504224.html" id="content"></iframe>
+<script>
+var src=document.getElementById('src');
+setInterval(function() {
+  if (!document.getElementById('content')) {
+    var x=document.createElement('iframe');
+    x.src=src;
+    x.id = 'content';
+    document.body.appendChild(x);
+    setTimeout(function() { window.focus(); document.documentElement.removeAttribute('class'); }, 100);
+  } else {
+    window.frames[0].location.reload();
+  }
+}, 500);
+</script>
+</body>
+</html>
+

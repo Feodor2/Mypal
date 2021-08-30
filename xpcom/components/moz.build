@@ -1,0 +1,55 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+XPIDL_SOURCES += [
+    'nsICategoryManager.idl',
+    'nsIClassInfo.idl',
+    'nsIComponentManager.idl',
+    'nsIComponentRegistrar.idl',
+    'nsIFactory.idl',
+    'nsIModule.idl',
+    'nsIServiceManager.idl',
+]
+
+XPIDL_MODULE = 'xpcom_components'
+
+EXPORTS += [
+    'nsCategoryCache.h',
+    'nsCategoryManagerUtils.h',
+    'nsComponentManagerUtils.h',
+    'nsServiceManagerUtils.h',
+]
+
+EXPORTS.mozilla += [
+    'GenericFactory.h',
+    'Module.h',
+    'ModuleLoader.h',
+    'ModuleUtils.h',
+]
+
+UNIFIED_SOURCES += [
+    'GenericFactory.cpp',
+    'ManifestParser.cpp',
+    'nsCategoryCache.cpp',
+    'nsCategoryManager.cpp',
+    'nsComponentManager.cpp',
+    'nsComponentManagerUtils.cpp',
+]
+
+FINAL_LIBRARY = 'xul'
+
+LOCAL_INCLUDES += [
+    '!..',
+    '../base',
+    '../build',
+    '../ds',
+    '../reflect/xptinfo',
+    '/chrome',
+    '/modules/libjar',
+]
+
+if 'gtk' in CONFIG['MOZ_WIDGET_TOOLKIT']:
+    CXXFLAGS += CONFIG['TK_CFLAGS']

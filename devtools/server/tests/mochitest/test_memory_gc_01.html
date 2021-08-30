@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+Bug 1067491 - Test forcing a gc.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Memory monitoring actor test</title>
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+</head>
+<body>
+<pre id="test">
+<script src="memory-helpers.js" type="application/javascript"></script>
+<script>
+"use strict";
+
+window.onload = function () {
+  SimpleTest.waitForExplicitFinish();
+
+  Task.spawn(function* () {
+    let { memory, client } = yield startServerAndGetSelectedTabMemory();
+
+    let beforeGC, afterGC;
+
+    do {
+      let objects = [];
+      for (let i = 0; i < 1000; i++) {
+        let o = {};
+        o[Math.random()] = 1;
+        objects.push(o);
+      }
+      objects = null;
+
+      yield { total: beforeGC } = memory.measure();
+
+      yield memory.forceGarbageCollection();
+
+      yield { total: afterGC } = memory.measure();
+    } while (beforeGC < afterGC);
+
+    ok(true, "The amount of memory after GC should eventually decrease");
+
+    destroyServerAndFinish(client);
+  });
+};
+</script>
+</pre>
+</body>
+</html>

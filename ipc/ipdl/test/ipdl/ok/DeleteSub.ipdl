@@ -1,0 +1,10 @@
+include protocol Delete;
+
+sync protocol DeleteSub {
+    manager Delete;
+
+parent:
+    sync __delete__(int x) returns (double d);
+
+};
+

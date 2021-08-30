@@ -1,0 +1,213 @@
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set sw=2 ts=8 et tw=80 ft=c: */
+
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+include protocol PHttpChannel;
+include protocol PFTPChannel;
+include protocol PRtspChannel;
+include protocol PChildToParentStream;
+include BlobTypes;
+include URIParams;
+include IPCStream;
+include PBackgroundSharedTypes;
+
+using mozilla::OriginAttributes from "mozilla/ipc/BackgroundUtils.h";
+using struct mozilla::void_t from "ipc/IPCMessageUtils.h";
+using RequestHeaderTuples from "mozilla/net/PHttpChannelParams.h";
+using struct nsHttpAtom from "nsHttp.h";
+using class nsHttpResponseHead from "nsHttpResponseHead.h";
+using class mozilla::TimeStamp from "mozilla/TimeStamp.h";
+
+namespace mozilla {
+namespace net {
+
+//-----------------------------------------------------------------------------
+// LoadInfo IPDL structs
+//-----------------------------------------------------------------------------
+
+struct RedirectHistoryEntryInfo
+{
+  PrincipalInfo       principalInfo;
+  OptionalURIParams   referrerUri;
+  nsCString           remoteAddress;
+};
+
+struct LoadInfoArgs
+{
+  OptionalPrincipalInfo       requestingPrincipalInfo;
+  PrincipalInfo               triggeringPrincipalInfo;
+  OptionalPrincipalInfo       principalToInheritInfo;
+  OptionalPrincipalInfo       sandboxedLoadingPrincipalInfo;
+  OptionalURIParams           resultPrincipalURI;
+  uint32_t                    securityFlags;
+  uint32_t                    contentPolicyType;
+  uint32_t                    tainting;
+  bool                        upgradeInsecureRequests;
+  bool                        verifySignedContent;
+  bool                        enforceSRI;
+  bool                        forceInheritPrincipalDropped;
+  uint64_t                    innerWindowID;
+  uint64_t                    outerWindowID;
+  uint64_t                    parentOuterWindowID;
+  uint64_t                    frameOuterWindowID;
+  bool                        enforceSecurity;
+  bool                        initialSecurityCheckDone;
+  bool                        isInThirdPartyContext;
+  OriginAttributes            originAttributes;
+  RedirectHistoryEntryInfo[]  redirectChainIncludingInternalRedirects;
+  RedirectHistoryEntryInfo[]  redirectChain;
+  nsCString[]                 corsUnsafeHeaders;
+  bool                        forcePreflight;
+  bool                        isPreflight;
+  bool                        forceHSTSPriming;
+  bool                        mixedContentWouldBlock;
+  bool                        isHSTSPriming;
+  bool                        isHSTSPrimingUpgrade;
+};
+
+/**
+ * Not every channel necessarily has a loadInfo attached.
+ */
+union OptionalLoadInfoArgs
+{
+  void_t;
+  LoadInfoArgs;
+};
+
+//-----------------------------------------------------------------------------
+// HTTP IPDL structs
+//-----------------------------------------------------------------------------
+
+union OptionalHttpResponseHead
+{
+  void_t;
+  nsHttpResponseHead;
+};
+
+struct CorsPreflightArgs
+{
+  nsCString[]   unsafeHeaders;
+};
+
+union OptionalCorsPreflightArgs
+{
+  void_t;
+  CorsPreflightArgs;
+};
+
+struct HttpChannelOpenArgs
+{
+  URIParams                   uri;
+  // - TODO: bug 571161: unclear if any HTTP channel clients ever
+  // set originalURI != uri (about:credits?); also not clear if
+  // chrome channel would ever need to know.  Get rid of next arg?
+  OptionalURIParams           original;
+  OptionalURIParams           doc;
+  OptionalURIParams           referrer;
+  uint32_t                    referrerPolicy;
+  OptionalURIParams           apiRedirectTo;
+  OptionalURIParams           topWindowURI;
+  uint32_t                    loadFlags;
+  RequestHeaderTuples         requestHeaders;
+  nsCString                   requestMethod;
+  OptionalIPCStream           uploadStream;
+  bool                        uploadStreamHasHeaders;
+  int16_t                     priority;
+  uint32_t                    classOfService;
+  uint8_t                     redirectionLimit;
+  bool                        allowSTS;
+  uint32_t                    thirdPartyFlags;
+  bool                        resumeAt;
+  uint64_t                    startPos;
+  nsCString                   entityID;
+  bool                        chooseApplicationCache;
+  nsCString                   appCacheClientID;
+  bool                        allowSpdy;
+  bool                        allowAltSvc;
+  bool                        beConservative;
+  OptionalLoadInfoArgs        loadInfo;
+  OptionalHttpResponseHead    synthesizedResponseHead;
+  nsCString                   synthesizedSecurityInfoSerialization;
+  uint32_t                    cacheKey;
+  uint64_t                    requestContextID;
+  OptionalCorsPreflightArgs   preflightArgs;
+  uint32_t                    initialRwin;
+  bool                        blockAuthPrompt;
+  bool                        suspendAfterSynthesizeResponse;
+  bool                        allowStaleCacheContent;
+  nsCString                   contentTypeHint;
+  uint64_t                    channelId;
+  uint64_t                    contentWindowId;
+  nsCString                   preferredAlternativeType;
+  uint64_t                    topLevelOuterContentWindowId;
+  TimeStamp                   launchServiceWorkerStart;
+  TimeStamp                   launchServiceWorkerEnd;
+  TimeStamp                   dispatchFetchEventStart;
+  TimeStamp                   dispatchFetchEventEnd;
+  TimeStamp                   handleFetchEventStart;
+  TimeStamp                   handleFetchEventEnd;
+};
+
+struct HttpChannelConnectArgs
+{
+  uint32_t registrarId;
+  bool shouldIntercept;
+};
+
+union HttpChannelCreationArgs
+{
+  HttpChannelOpenArgs;      // For AsyncOpen: the common case.
+  HttpChannelConnectArgs;   // Used for redirected-to channels
+};
+
+//-----------------------------------------------------------------------------
+// FTP IPDL structs
+//-----------------------------------------------------------------------------
+
+struct FTPChannelOpenArgs
+{
+  URIParams                 uri;
+  uint64_t                  startPos;
+  nsCString                 entityID;
+  OptionalIPCStream         uploadStream;
+  OptionalLoadInfoArgs      loadInfo;
+};
+
+struct FTPChannelConnectArgs
+{
+  uint32_t channelId;
+};
+
+union FTPChannelCreationArgs
+{
+  FTPChannelOpenArgs;      // For AsyncOpen: the common case.
+  FTPChannelConnectArgs;   // Used for redirected-to channels
+};
+
+struct HttpChannelDiverterArgs
+{
+  PHttpChannel mChannel;
+  bool mApplyConversion;
+};
+
+union ChannelDiverterArgs
+{
+  HttpChannelDiverterArgs;
+  PFTPChannel;
+};
+
+//-----------------------------------------------------------------------------
+// RTSP IPDL structs
+//-----------------------------------------------------------------------------
+
+struct RtspChannelConnectArgs
+{
+  URIParams uri;
+  uint32_t channelId;
+};
+
+} // namespace ipc
+} // namespace mozilla

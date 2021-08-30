@@ -1,0 +1,174 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+with Files("**"):
+    BUG_COMPONENT = ("Core", "DOM: Content Processes")
+
+XPIDL_SOURCES += [
+    'nsIHangReport.idl',
+]
+
+XPIDL_MODULE = 'dom'
+
+EXPORTS.mozilla.dom.ipc += [
+    'IdType.h',
+    'StructuredCloneData.h',
+]
+
+EXPORTS.mozilla.dom += [
+    'CoalescedWheelData.h',
+    'ContentBridgeChild.h',
+    'ContentBridgeParent.h',
+    'ContentChild.h',
+    'ContentParent.h',
+    'ContentPrefs.h',
+    'ContentProcess.h',
+    'ContentProcessManager.h',
+    'CPOWManagerGetter.h',
+    'FilePickerParent.h',
+    'MemoryReportRequest.h',
+    'nsIContentChild.h',
+    'nsIContentParent.h',
+    'PermissionMessageUtils.h',
+    'TabChild.h',
+    'TabContext.h',
+    'TabMessageUtils.h',
+    'TabParent.h',
+    'TelemetryScrollProbe.h',
+    'URLClassifierChild.h',
+    'URLClassifierParent.h',
+]
+
+EXPORTS.mozilla += [
+    'PreallocatedProcessManager.h',
+    'ProcessHangMonitor.h',
+    'ProcessHangMonitorIPC.h',
+    'ProcessPriorityManager.h',
+]
+
+UNIFIED_SOURCES += [
+    'CoalescedWheelData.cpp',
+    'ColorPickerParent.cpp',
+    'ContentBridgeChild.cpp',
+    'ContentBridgeParent.cpp',
+    'ContentParent.cpp',
+    'ContentPrefs.cpp',
+    'ContentProcess.cpp',
+    'ContentProcessManager.cpp',
+    'FilePickerParent.cpp',
+    'MemoryReportRequest.cpp',
+    'nsIContentChild.cpp',
+    'nsIContentParent.cpp',
+    'PermissionMessageUtils.cpp',
+    'PreallocatedProcessManager.cpp',
+    'ProcessPriorityManager.cpp',
+    'StructuredCloneData.cpp',
+    'TabChild.cpp',
+    'TabContext.cpp',
+    'TabMessageUtils.cpp',
+    'TabParent.cpp',
+    'TelemetryScrollProbe.cpp',
+    'URLClassifierParent.cpp',
+]
+
+# ContentChild.cpp cannot be compiled in unified mode on  linux due to Time conflict
+SOURCES += [
+    'ContentChild.cpp',
+    'ProcessHangMonitor.cpp',
+]
+
+IPDL_SOURCES += [
+    'DOMTypes.ipdlh',
+    'MemoryReportTypes.ipdlh',
+    'PBrowser.ipdl',
+    'PBrowserOrId.ipdlh',
+    'PColorPicker.ipdl',
+    'PContent.ipdl',
+    'PContentBridge.ipdl',
+    'PContentPermission.ipdlh',
+    'PContentPermissionRequest.ipdl',
+    'PCycleCollectWithLogs.ipdl',
+    'PDocumentRenderer.ipdl',
+    'PFilePicker.ipdl',
+    'PPluginWidget.ipdl',
+    'PProcessHangMonitor.ipdl',
+    'PTabContext.ipdlh',
+    'PURLClassifier.ipdl',
+    'PURLClassifierInfo.ipdlh',
+    'PURLClassifierLocal.ipdl',
+    'ServiceWorkerConfiguration.ipdlh',
+]
+
+include('/ipc/chromium/chromium-config.mozbuild')
+
+FINAL_LIBRARY = 'xul'
+
+if CONFIG['MOZ_SANDBOX'] and CONFIG['OS_TARGET'] == 'Darwin':
+    USE_LIBS += [
+        'mozsandbox',
+    ]
+
+if CONFIG['MOZ_CONTENT_SANDBOX'] and CONFIG['OS_ARCH'] == 'Linux':
+    USE_LIBS += [
+        'mozsandbox',
+    ]
+
+LOCAL_INCLUDES += [
+    '/caps',
+    '/chrome',
+    '/docshell/base',
+    '/dom/base',
+    '/dom/events',
+    '/dom/filesystem',
+    '/dom/geolocation',
+    '/dom/media/webspeech/synth/ipc',
+    '/dom/security',
+    '/dom/workers',
+    '/extensions/cookie',
+    '/extensions/spellcheck/src',
+    '/gfx/2d',
+    '/hal/sandbox',
+    '/layout/base',
+    '/media/webrtc',
+    '/netwerk/base',
+    '/toolkit/components/printingui/ipc',
+    '/toolkit/crashreporter',
+    '/toolkit/xre',
+    '/uriloader/exthandler',
+    '/widget',
+    '/xpcom/base',
+    '/xpcom/threads',
+]
+
+if CONFIG['MOZ_SANDBOX'] and CONFIG['OS_ARCH'] == 'WINNT':
+    LOCAL_INCLUDES += [
+        '/security/sandbox/chromium',
+        '/security/sandbox/chromium-shim',
+    ]
+
+if CONFIG['OS_ARCH'] != 'WINNT':
+    LOCAL_INCLUDES += [
+        '/modules/libjar',
+    ]
+
+DEFINES['BIN_SUFFIX'] = '"%s"' % CONFIG['BIN_SUFFIX']
+
+if CONFIG['MOZ_WIDGET_TOOLKIT'] in ('android', 'gtk2'):
+    DEFINES['MOZ_ENABLE_FREETYPE'] = True
+
+if CONFIG['MOZ_TOOLKIT_SEARCH']:
+    DEFINES['MOZ_TOOLKIT_SEARCH'] = True
+
+JAR_MANIFESTS += ['jar.mn']
+
+BROWSER_CHROME_MANIFESTS += ['tests/browser.ini']
+MOCHITEST_CHROME_MANIFESTS += ['tests/chrome.ini']
+MOCHITEST_MANIFESTS += ['tests/mochitest.ini']
+
+CXXFLAGS += CONFIG['TK_CFLAGS']
+
+if CONFIG['GNU_CXX']:
+    CXXFLAGS += ['-Wno-error=shadow']

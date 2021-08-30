@@ -1,0 +1,168 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@import url("chrome://global/skin/in-content/info-pages.css");
+
+:root {
+  --color-grey: #505473;
+}
+
+html.private {
+  --in-content-page-color: white;
+  --in-content-text-color: white;
+  --in-content-page-background: #25003e;
+}
+
+a:link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 48em;
+}
+
+.section-main {
+  margin-bottom: 48px;
+}
+
+.section-main:last-child {
+  margin-bottom: 0;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+.list-row {
+  overflow: auto;
+}
+
+.list-row > ul > li {
+  float: left;
+  width: 16em;
+  line-height: 2em;
+  margin-inline-start: 1em;
+  margin-bottom: 0;
+}
+
+.list-row > ul > li:dir(rtl) {
+  float: right;
+}
+
+.title {
+  background-image: url("chrome://browser/skin/privatebrowsing/private-browsing.svg");
+  background-position: left center;
+  background-size: 2em;
+  line-height: 2em;
+  margin-inline-start: calc(-2em - 10px);
+  padding-inline-start: calc(2em + 10px);
+}
+
+.title:dir(rtl) {
+  background-position: right center;
+}
+
+.about-subheader {
+  display: flex;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: lighter;
+  background-image: url("chrome://browser/skin/privatebrowsing/tracking-protection.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 1.5em;
+  line-height: 1.5em;
+  margin-inline-start: calc(-1.5em - 10px);
+  padding-inline-start: calc(1.5em + 10px);
+}
+
+.about-subheader:dir(rtl) {
+  background-position: right;
+}
+
+.about-subheader.tp-off {
+  background-image: url("chrome://browser/skin/privatebrowsing/tracking-protection-off.svg");
+}
+
+.about-info {
+  font-size: .9em;
+}
+
+.tpTitle {
+  margin-inline-end: 12px;
+}
+
+a.button {
+  padding: 3px 20px;
+  background-color: #8000d7;
+  border: 1px solid #6000a1;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/**
+ * We want to hide the checkbox in lieu of the toggle-btn
+ * "slider toggle". We need to make the toggle keyboard
+ * focusable, however, which is not possible if it's
+ * display:none. We work around this by making the toggle
+ * invisible but still present in the display list, allowing
+ * it to receive keyboard events. When it is focused by keyboard,
+ * we use the -moz-focusring selector on the invisible checkbox
+ * to show a focus ring around the slider toggle.
+ */
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.toggle + .toggle-btn {
+  box-sizing: border-box;
+  cursor: pointer;
+  min-width: 48px;
+  height: 27px;
+  border-radius: 13px;
+  background-color: var(--color-grey);
+  border: 1px solid #202340;
+}
+
+.toggle + .toggle-btn::after {
+  position: relative;
+  display: block;
+  content: "";
+  width: 25px;
+  height: 100%;
+  left: 0;
+  border-radius: 50%;
+  background: white;
+  transition: left .2s ease;
+}
+
+.toggle + .toggle-btn:dir(rtl)::after {
+  left: auto;
+  right: 0;
+  transition-property: right;
+}
+
+.toggle:checked + .toggle-btn {
+  background: #16da00;
+  border-color: #0CA700;
+}
+
+.toggle:checked + .toggle-btn::after {
+  left: 21px;
+}
+
+.toggle:checked + .toggle-btn:dir(rtl)::after {
+  left: auto;
+  right: 16px;
+}
+
+.toggle:-moz-focusring + .toggle-btn {
+  outline: 2px solid rgba(0, 149, 221, 0.5);
+  outline-offset: 1px;
+  -moz-outline-radius: 2px;
+}

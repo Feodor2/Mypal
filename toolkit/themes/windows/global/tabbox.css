@@ -1,0 +1,77 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* ===== tabbox.css =================================================
+  == Styles used by XUL tab-related elements.
+  ======================================================================= */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* ::::: tabs ::::: */
+
+.tabs-left,
+.tabs-right {
+  border-bottom: 2px solid;
+  -moz-border-bottom-colors: ThreeDHighlight ThreeDLightShadow;
+}
+
+/* ::::: tabpanels ::::: */
+
+tabpanels {
+  -moz-appearance: tabpanels;
+  padding: 8px;
+  color: -moz-DialogText;
+}
+
+/* ::::: tab ::::: */
+
+tab {
+  -moz-appearance: tab;
+  margin-top: 2px;
+  padding: 1px 4px 2px 4px;
+  color: -moz-DialogText;
+}
+
+.tab-text {
+  margin: 0 !important;
+}
+
+tab[visuallyselected="true"] {
+  margin-top: 0;
+  padding: 1px 6px 4px 6px;
+}
+
+tab:-moz-focusring > .tab-middle {
+  /* Don't specify the outline-color, we should always use initial value. */
+  outline: 1px dotted;
+}
+
+tab:first-of-type[visuallyselected="true"] {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+/* ::::: tab-bottom ::::::::::
+   :: Tabs that are attached to the bottom of a panel, but not necessarily
+   :: a tabpanels.
+   ::::: */
+
+.tab-bottom {
+  margin-top: 0;
+  margin-bottom: 2px;
+  padding: 2px 4px 1px 4px;
+}
+
+.tab-bottom[visuallyselected="true"] {
+  margin-bottom: 0;
+  padding: 4px 6px 1px 6px;
+}
+
+/* ::::: tabs-bottom ::::: */
+
+.tabs-bottom > .tabs-left,
+.tabs-bottom > .tabs-right {
+  border-top: 1px solid ThreeDShadow;
+  border-bottom: none;
+}

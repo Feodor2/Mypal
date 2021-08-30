@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+Bug 1007200 - Create a framerate actor
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Framerate actor test</title>
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+</head>
+<body>
+<pre id="test">
+<script>
+"use strict";
+
+window.onload = function () {
+  const Cu = Components.utils;
+
+  const {require} = Cu.import("resource://devtools/shared/Loader.jsm", {});
+  const {DebuggerClient} = require("devtools/shared/client/main");
+  const {DebuggerServer} = require("devtools/server/main");
+  const Services = require("Services");
+
+  // Always log packets when running tests.
+  Services.prefs.setBoolPref("devtools.debugger.log", true);
+  SimpleTest.registerCleanupFunction(function () {
+    Services.prefs.clearUserPref("devtools.debugger.log");
+  });
+
+  SimpleTest.waitForExplicitFinish();
+
+  const {FramerateFront} = require("devtools/shared/fronts/framerate");
+
+  function plotFPS(ticks, interval = 100, clamp = 60) {
+    let timeline = [];
+    let totalTicks = ticks.length;
+
+    // If the refresh driver didn't get a chance to tick before the
+    // recording was stopped, assume framerate was 0.
+    if (totalTicks == 0) {
+      timeline.push({ delta: 0, value: 0 });
+      timeline.push({ delta: interval, value: 0 });
+      return timeline;
+    }
+
+    let frameCount = 0;
+    let prevTime = ticks[0];
+
+    for (let i = 1; i < totalTicks; i++) {
+      let currTime = ticks[i];
+      frameCount++;
+
+      let elapsedTime = currTime - prevTime;
+      if (elapsedTime < interval) {
+        continue;
+      }
+
+      let framerate = Math.min(1000 / (elapsedTime / frameCount), clamp);
+      timeline.push({ delta: prevTime, value: framerate });
+      timeline.push({ delta: currTime, value: framerate });
+
+      frameCount = 0;
+      prevTime = currTime;
+    }
+
+    return timeline;
+  }
+
+  if (!DebuggerServer.initialized) {
+    DebuggerServer.init();
+    DebuggerServer.addBrowserActors();
+  }
+
+  let client = new DebuggerClient(DebuggerServer.connectPipe());
+  client.connect().then(function onConnect() {
+    client.listTabs(function onListTabs(response) {
+      let form = response.tabs[response.selected];
+      let front = FramerateFront(client, form);
+
+      front.stopRecording().then(rawData => {
+        ok(rawData, "There should be a recording available.");
+        is(rawData.length, 0, "...but it should be empty.");
+
+        let timeline = plotFPS(rawData);
+        is(timeline.length, 2,
+          "There should be one measurement plotted, with two entries.");
+
+        info("The framerate should be assumed to be 0 if the recording is empty.");
+
+        is(timeline[0].delta, 0,
+          "The first time delta should be 0.");
+        is(timeline[0].value, 0,
+          "The first framerate value should be 0.");
+
+        is(timeline[1].delta, 100,
+          "The last time delta should be 100 (the default interval value).");
+        is(timeline[1].value, 0,
+          "The last framerate value should be 0.");
+
+        // eslint-disable-next-line max-nested-callbacks
+        client.close().then(() => {
+          DebuggerServer.destroy();
+          SimpleTest.finish();
+        });
+      });
+    });
+  });
+};
+</script>
+</pre>
+</body>
+</html>

@@ -1,0 +1,68 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+include protocol PQuota;
+
+namespace mozilla {
+namespace dom {
+namespace quota {
+
+struct InitResponse
+{
+};
+
+struct InitOriginResponse
+{
+  bool created;
+};
+
+struct ClearOriginResponse
+{
+};
+
+struct ClearDataResponse
+{
+};
+
+struct ClearAllResponse
+{
+};
+
+struct ResetAllResponse
+{
+};
+
+struct PersistedResponse
+{
+  bool persisted;
+};
+
+struct PersistResponse
+{
+};
+
+union RequestResponse
+{
+  nsresult;
+  InitResponse;
+  InitOriginResponse;
+  ClearOriginResponse;
+  ClearDataResponse;
+  ClearAllResponse;
+  ResetAllResponse;
+  PersistedResponse;
+  PersistResponse;
+};
+
+protocol PQuotaRequest
+{
+  manager PQuota;
+
+child:
+  async __delete__(RequestResponse response);
+};
+
+} // namespace quota
+} // namespace dom
+} // namespace mozilla

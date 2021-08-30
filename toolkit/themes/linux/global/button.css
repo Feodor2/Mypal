@@ -1,0 +1,81 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* ===== button.css =====================================================
+  == Styles used by the XUL button element.
+  ======================================================================= */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* :::::::::: button :::::::::: */
+
+button {
+  -moz-appearance: button;
+  margin: 1px 5px 2px;
+  min-width: 6.3em;
+  color: ButtonText;
+  text-shadow: none;
+}
+
+.button-box {
+  -moz-appearance: button-focus;
+}
+
+.button-icon {
+  margin-inline-end: 2px;
+}
+
+.button-text {
+  margin: 0 !important;
+  text-align: center;
+}
+
+/* .......... hover state .......... */
+
+button:hover:not(:-moz-any(:active,[disabled="true"],[open="true"],[checked="true"])) {
+  color: -moz-buttonhovertext;
+}
+
+/* .......... disabled state .......... */
+
+button[disabled="true"] {
+  color: GrayText;
+}
+
+/* ::::: menu/menu-button buttons ::::: */
+
+button[type="menu-button"] {
+  -moz-appearance: dualbutton;
+}
+
+.button-menubutton-button {
+  margin: 0;
+}
+
+.button-menu-dropmarker,
+.button-menubutton-dropmarker {
+  -moz-appearance: toolbarbutton-dropdown !important;
+}
+
+.button-menubutton-dropmarker {
+  margin-inline-end: 3px;
+}
+
+/* ::::: plain buttons ::::: */
+
+button.plain {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+button[type="disclosure"] {
+  margin: 0;
+  -moz-appearance: none;
+  list-style-image: url("chrome://global/skin/tree/twisty-clsd.png");
+  min-width: 0;
+}
+
+button[type="disclosure"][open="true"] {
+  list-style-image: url("chrome://global/skin/tree/twisty-open.png"); 
+}

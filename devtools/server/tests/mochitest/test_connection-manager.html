@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+Bug 898485 - [app manager] Implement an abstract connection manager
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Mozilla Bug</title>
+  <script type="application/javascript" src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css">
+</head>
+<body>
+<pre id="test">
+<script>
+"use strict";
+
+window.onload = function () {
+  SimpleTest.waitForExplicitFinish();
+
+  const Cu = Components.utils;
+
+  const {require} = Cu.import("resource://devtools/shared/Loader.jsm", {});
+  const {DebuggerServer} = require("devtools/server/main");
+  const Services = require("Services");
+
+  if (!DebuggerServer.initialized) {
+    DebuggerServer.init();
+    DebuggerServer.addBrowserActors();
+  }
+
+  const {
+    ConnectionManager,
+    Connection
+  } = require("devtools/shared/client/connection-manager");
+
+  let orgCount = ConnectionManager.connections.length;
+
+  ConnectionManager.once("new", (event, c) => {
+    is(ConnectionManager.connections[orgCount], c,
+       "new event fired, with correct connection");
+  });
+
+  let c1 = ConnectionManager.createConnection();
+  let c2 = ConnectionManager.createConnection();
+
+  is(ConnectionManager.connections[orgCount], c1, "Connection 1 registered");
+  is(ConnectionManager.connections[orgCount + 1], c2, "Connection 2 registered");
+
+  c1.once(Connection.Events.DESTROYED, function () {
+    is(ConnectionManager.connections.length, orgCount + 1, "Connection 1 destroyed");
+
+    let c = c2;
+
+    let eventsRef = "connecting connected disconnecting disconnected host-changed"
+                    + " disconnected timeout destroyed";
+    let events = [];
+
+    let s = Connection.Status;
+
+    is(c.status, s.DISCONNECTED, "disconnected");
+
+    c.once(Connection.Events.CONNECTING, function (e) {
+      events.push(e);
+      is(c.status, s.CONNECTING, "connecting");
+    });
+
+    c.once(Connection.Events.CONNECTED, function (e) {
+      events.push(e);
+      is(c.status, s.CONNECTED, "connected");
+      c.disconnect();
+    });
+
+    c.once(Connection.Events.DISCONNECTING, function (e) {
+      events.push(e);
+      is(c.status, s.DISCONNECTING, "disconnecting");
+    });
+
+    c.once(Connection.Events.DISCONNECTED, function (e) {
+      events.push(e);
+      is(c.status, s.DISCONNECTED, "disconnected");
+      testError();
+    });
+
+    c.once(Connection.Events.DESTROYED, function (e) {
+      events.push(e);
+      is(c.status, s.DESTROYED, "destroyed");
+      finish();
+    });
+
+    c.connect();
+
+    function testError() {
+      c.once(Connection.Events.DISCONNECTED, function (e) {
+        events.push(e);
+        testKeepConnecting();
+      });
+      c.once(Connection.Events.HOST_CHANGED, function (e) {
+        events.push(e);
+        c.connect();
+      });
+      c.port = 1;
+      c.host = "localhost";
+    }
+
+    function testKeepConnecting() {
+      // ensure that keepConnecting keep trying connecting
+      // until the connection attempts timeout
+      let prefRemoteTimeout = "devtools.debugger.remote-timeout";
+      let originalTimeout = Services.prefs.getIntPref(prefRemoteTimeout);
+      Services.prefs.setIntPref("devtools.debugger.remote-timeout", 1000);
+      c.once("timeout", function (e) {
+        events.push(e);
+        Services.prefs.setIntPref(prefRemoteTimeout, originalTimeout);
+        ConnectionManager.destroyConnection(c);
+      });
+      c.keepConnecting = true;
+      let port = ConnectionManager.getFreeTCPPort();
+      ok(parseInt(port, 10), "Free TCP port looks like a port number");
+      c.port = port;
+      c.host = "locahost";
+      c.connect();
+    }
+
+    function finish() {
+      is(events.join(" "), eventsRef, "Events received in the right order");
+      DebuggerServer.destroy();
+      SimpleTest.finish();
+    }
+  });
+
+  ConnectionManager.destroyConnection(c1);
+};
+</script>
+</pre>
+</body>
+</html>

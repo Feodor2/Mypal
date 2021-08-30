@@ -1,0 +1,125 @@
+/* -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; tab-width: 8 -*- */
+/* vim: set sw=4 ts=8 et tw=80 ft=cpp : */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+include IPCBlob;
+include IPCStream;
+include ProtocolTypes;
+
+using struct mozilla::void_t
+  from "ipc/IPCMessageUtils.h";
+
+using struct mozilla::SerializedStructuredCloneBuffer
+  from "ipc/IPCMessageUtils.h";
+
+using LayoutDeviceIntRect from "Units.h";
+using DesktopIntRect from "Units.h";
+using DesktopToLayoutDeviceScale from "Units.h";
+using CSSToLayoutDeviceScale from "Units.h";
+using CSSRect from "Units.h";
+using CSSSize from "Units.h";
+using mozilla::LayoutDeviceIntPoint from "Units.h";
+using mozilla::dom::ScreenOrientationInternal from "mozilla/dom/ScreenOrientation.h";
+using struct mozilla::layers::TextureFactoryIdentifier from "mozilla/layers/CompositorTypes.h";
+using mozilla::layers::CompositorOptions from "mozilla/layers/CompositorOptions.h";
+
+namespace mozilla {
+namespace dom {
+
+struct MessagePortIdentifier
+{
+  nsID uuid;
+  nsID destinationUuid;
+  uint32_t sequenceId;
+  bool neutered;
+};
+
+/**
+ * Cross-process representation for postMessage() style payloads where Blobs may
+ * be referenced/"cloned" and (optionally) messageports transferred.  Use
+ * StructuredCloneData in your code to convert between this wire representation
+ * and the StructuredCloneData StructuredCloneHolder-subclass.
+ */
+struct ClonedMessageData
+{
+  SerializedStructuredCloneBuffer data;
+  IPCBlob[] blobs;
+  IPCStream[] inputStreams;
+  MessagePortIdentifier[] identfiers;
+};
+
+union IPCDataTransferData
+{
+  nsString;  // text
+  Shmem;     // images using Shmem
+  IPCBlob;   // files
+};
+
+struct IPCDataTransferImage
+{
+  uint32_t width;
+  uint32_t height;
+  uint32_t stride;
+  uint8_t format;
+};
+
+struct IPCDataTransferItem
+{
+  nsCString flavor;
+  // The image details are only used when transferring images.
+  IPCDataTransferImage imageDetails;
+  IPCDataTransferData data;
+};
+
+struct IPCDataTransfer
+{
+  IPCDataTransferItem[] items;
+};
+
+struct ScreenDetails {
+  LayoutDeviceIntRect rect;
+  DesktopIntRect rectDisplayPix;
+  LayoutDeviceIntRect availRect;
+  DesktopIntRect availRectDisplayPix;
+  int32_t pixelDepth;
+  int32_t colorDepth;
+  DesktopToLayoutDeviceScale contentsScaleFactor;
+  CSSToLayoutDeviceScale defaultCSSScaleFactor;
+  float dpi;
+};
+
+struct DimensionInfo
+{
+  CSSRect rect;
+  CSSSize size;
+  ScreenOrientationInternal orientation;
+  LayoutDeviceIntPoint clientOffset;
+  LayoutDeviceIntPoint chromeDisp;
+};
+
+struct FrameScriptInfo
+{
+  nsString url;
+  bool runInGlobalScope;
+};
+
+/**
+ * The information required to complete a window creation request.
+ */
+struct CreatedWindowInfo
+{
+  nsresult rv;
+  bool windowOpened;
+  FrameScriptInfo[] frameScripts;
+  nsCString urlToLoad;
+  TextureFactoryIdentifier textureFactoryIdentifier;
+  uint64_t layersId;
+  CompositorOptions compositorOptions;
+  uint32_t maxTouchPoints;
+  DimensionInfo dimensions;
+};
+
+} // namespace dom
+} // namespace mozilla

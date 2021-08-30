@@ -1,0 +1,95 @@
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set ts=8 sts=2 et sw=2 tw=80: */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#include "mozilla/ServoElementSnapshot.h"
+#include "mozilla/dom/Element.h"
+#include "nsIContentInlines.h"
+#include "nsContentUtils.h"
+
+namespace mozilla {
+
+ServoElementSnapshot::ServoElementSnapshot(const Element* aElement)
+  : mState(0)
+  , mContains(Flags(0))
+  , mIsTableBorderNonzero(false)
+  , mIsMozBrowserFrame(false)
+  , mClassAttributeChanged(false)
+  , mIdAttributeChanged(false)
+  , mOtherAttributeChanged(false)
+{
+  MOZ_COUNT_CTOR(ServoElementSnapshot);
+  mIsHTMLElementInHTMLDocument =
+    aElement->IsHTMLElement() && aElement->IsInHTMLDocument();
+  mIsInChromeDocument = nsContentUtils::IsChromeDoc(aElement->OwnerDoc());
+  mSupportsLangAttr = aElement->SupportsLangAttr();
+}
+
+ServoElementSnapshot::~ServoElementSnapshot()
+{
+  MOZ_COUNT_DTOR(ServoElementSnapshot);
+}
+
+void
+ServoElementSnapshot::AddAttrs(Element* aElement,
+                               int32_t aNameSpaceID,
+                               nsIAtom* aAttribute)
+{
+  MOZ_ASSERT(aElement);
+
+  if (aNameSpaceID == kNameSpaceID_None) {
+    if (aAttribute == nsGkAtoms::_class) {
+      mClassAttributeChanged = true;
+    } else if (aAttribute == nsGkAtoms::id) {
+      mIdAttributeChanged = true;
+    } else {
+      mOtherAttributeChanged = true;
+    }
+  } else {
+    mOtherAttributeChanged = true;
+  }
+
+  if (HasAttrs()) {
+    return;
+  }
+
+  uint32_t attrCount = aElement->GetAttrCount();
+  const nsAttrName* attrName;
+  for (uint32_t i = 0; i < attrCount; ++i) {
+    attrName = aElement->GetAttrNameAt(i);
+    const nsAttrValue* attrValue =
+      aElement->GetParsedAttr(attrName->LocalName(), attrName->NamespaceID());
+    mAttrs.AppendElement(ServoAttrSnapshot(*attrName, *attrValue));
+  }
+  mContains |= Flags::Attributes;
+  if (aElement->HasID()) {
+    mContains |= Flags::Id;
+  }
+  if (const nsAttrValue* classValue = aElement->GetClasses()) {
+    mClass = *classValue;
+    mContains |= Flags::MaybeClass;
+  }
+}
+
+void
+ServoElementSnapshot::AddOtherPseudoClassState(Element* aElement)
+{
+  MOZ_ASSERT(aElement);
+
+  if (HasOtherPseudoClassState()) {
+    return;
+  }
+
+  mIsTableBorderNonzero =
+    *nsCSSPseudoClasses::MatchesElement(CSSPseudoClassType::mozTableBorderNonzero,
+                                        aElement);
+  mIsMozBrowserFrame =
+    *nsCSSPseudoClasses::MatchesElement(CSSPseudoClassType::mozBrowserFrame,
+                                        aElement);
+
+  mContains |= Flags::OtherPseudoClassState;
+}
+
+} // namespace mozilla

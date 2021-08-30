@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+  <head>
+  </head>
+  <body>
+    <div id="host"></div>
+    <script>
+      var host, root;
+
+      function run() {
+        host = document.getElementById("host");
+        root = host.createShadowRoot();
+        root.innerHTML = 'a <content></content> c';
+      }
+
+      function tweak() {
+        var span = document.createElement("span");
+        span.innerHTML = "b";
+
+        // Span should be distributed to insertion point between 'a' and 'c'.
+        host.appendChild(span);
+
+        document.documentElement.removeAttribute("class");
+      }
+
+      if (document.body.createShadowRoot) {
+        run();
+        window.addEventListener("MozReftestInvalidate", tweak);
+      } else {
+        document.documentElement.className = "";
+      }
+    </script>
+  </body>
+</html>

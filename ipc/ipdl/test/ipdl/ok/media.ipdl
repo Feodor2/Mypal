@@ -1,0 +1,5 @@
+sync protocol media {
+child:
+    async __delete__();
+
+};

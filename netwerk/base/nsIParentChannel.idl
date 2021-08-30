@@ -1,0 +1,60 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#include "nsIStreamListener.idl"
+
+interface nsITabParent;
+
+%{C++
+namespace mozilla {
+namespace net {
+class HttpChannelParentListener;
+}
+}
+%}
+
+[ptr] native HttpChannelParentListener(mozilla::net::HttpChannelParentListener);
+
+/**
+ * Implemented by chrome side of IPC protocols.
+ */
+
+[scriptable, uuid(e0fc4801-6030-4653-a59f-1fb282bd1a04)]
+interface nsIParentChannel : nsIStreamListener
+{
+  /**
+   * Called to set the HttpChannelParentListener object (optional).
+   */
+  [noscript] void setParentListener(in HttpChannelParentListener listener);
+
+  /**
+   * Called to notify the HttpChannelChild that tracking protection was
+   * disabled for this load.
+   */
+  [noscript] void notifyTrackingProtectionDisabled();
+
+   /**
+   * Called to set matched information when URL matches SafeBrowsing list.
+   * @param aList
+   *        Name of the list that matched
+   * @param aProvider
+   *        Name of provider that matched
+   * @param aPrefix
+   *        String represents hash prefix that matched
+   */
+  [noscript] void setClassifierMatchedInfo(in ACString aList,
+                                           in ACString aProvider,
+                                           in ACString aPrefix);
+
+  /**
+   * Called to notify the HttpChannelChild that the resource being loaded
+   * is on the tracking protection list.
+   */
+  [noscript] void notifyTrackingResource();
+
+  /**
+   * Called to invoke deletion of the IPC protocol.
+   */
+  void delete();
+};

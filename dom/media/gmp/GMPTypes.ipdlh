@@ -1,0 +1,106 @@
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+using GMPBufferType from "gmp-video-codec.h";
+using GMPMediaKeyStatus from "gmp-decryption.h";
+
+namespace mozilla {
+namespace gmp {
+
+struct NodeIdData {
+  nsString mOrigin;
+  nsString mTopLevelOrigin;
+  nsString mGMPName;
+};
+
+struct GMPDecryptionData {
+  uint8_t[] mKeyId;
+  uint8_t[] mIV;
+  uint16_t[] mClearBytes;
+  uint32_t[] mCipherBytes;
+  nsCString[] mSessionIds;
+};
+
+struct GMPVideoEncodedFrameData
+{
+  uint32_t mEncodedWidth;
+  uint32_t mEncodedHeight;
+  uint64_t mTimestamp; // microseconds
+  uint64_t mDuration; // microseconds
+  uint32_t mFrameType;
+  uint32_t mSize;
+  GMPBufferType mBufferType;
+  Shmem mBuffer;
+  bool mCompleteFrame;
+  GMPDecryptionData mDecryptionData;
+};
+
+struct GMPPlaneData
+{
+  int32_t mSize;
+  int32_t mStride;
+  Shmem mBuffer;
+};
+
+struct GMPVideoi420FrameData
+{
+  GMPPlaneData mYPlane;
+  GMPPlaneData mUPlane;
+  GMPPlaneData mVPlane;
+  int32_t mWidth;
+  int32_t mHeight;
+  uint64_t mTimestamp; // microseconds
+  uint64_t mDuration; // microseconds
+};
+
+struct GMPKeyInformation {
+  uint8_t[] keyId;
+  GMPMediaKeyStatus status;
+};
+
+struct CDMInputBuffer {
+  Shmem mData;
+  uint8_t[] mKeyId;
+  uint8_t[] mIV;
+  int64_t mTimestamp;
+  int64_t mDuration;
+  uint16_t[] mClearBytes;
+  uint32_t[] mCipherBytes;
+  bool mIsEncrypted;
+};
+
+struct CDMVideoDecoderConfig {
+  uint32_t mCodec;
+  uint32_t mProfile;
+  uint32_t mFormat;
+  int32_t mImageWidth;
+  int32_t mImageHeight;
+  uint8_t[] mExtraData;
+};
+
+struct CDMKeyInformation {
+  uint8_t[] mKeyId;
+  uint32_t mStatus;
+  uint32_t mSystemCode;
+};
+
+struct CDMVideoPlane {
+  uint32_t mPlaneOffset;
+  uint32_t mStride;
+};
+
+struct CDMVideoFrame {
+  uint32_t mFormat;
+  int32_t mImageWidth;
+  int32_t mImageHeight;
+  CDMVideoPlane mYPlane;
+  CDMVideoPlane mUPlane;
+  CDMVideoPlane mVPlane;
+  int64_t mTimestamp;
+  int64_t mDuration;
+};
+
+}
+}

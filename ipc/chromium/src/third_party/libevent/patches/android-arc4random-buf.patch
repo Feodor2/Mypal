@@ -1,0 +1,22 @@
+diff --git a/ipc/chromium/src/third_party/libevent/android/event2/event-config.h b/ipc/chromium/src/third_party/libevent/android/event2/event-config.h
+--- a/ipc/chromium/src/third_party/libevent/android/event2/event-config.h
++++ b/ipc/chromium/src/third_party/libevent/android/event2/event-config.h
+@@ -25,17 +25,17 @@
+ 
+ /* Define to 1 if you have the `accept4' function. */
+ #define EVENT__HAVE_ACCEPT4 1
+ 
+ /* Define to 1 if you have the `arc4random' function. */
+ #define EVENT__HAVE_ARC4RANDOM 1
+ 
+ /* Define to 1 if you have the `arc4random_buf' function. */
+-#define EVENT__HAVE_ARC4RANDOM_BUF 1
++/* #undef EVENT__HAVE_ARC4RANDOM_BUF */
+ 
+ /* Define to 1 if you have the <arpa/inet.h> header file. */
+ #define EVENT__HAVE_ARPA_INET_H 1
+ 
+ /* Define to 1 if you have the `clock_gettime' function. */
+ #define EVENT__HAVE_CLOCK_GETTIME 1
+ 
+ /* Define to 1 if you have the declaration of `CTL_KERN', and to 0 if you

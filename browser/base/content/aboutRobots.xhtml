@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<!DOCTYPE html [
+  <!ENTITY % htmlDTD
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "DTD/xhtml1-strict.dtd">
+  %htmlDTD;
+  <!ENTITY % netErrorDTD
+    SYSTEM "chrome://global/locale/netError.dtd">
+  %netErrorDTD;
+  <!ENTITY % globalDTD
+    SYSTEM "chrome://global/locale/global.dtd">
+  %globalDTD;
+  <!ENTITY % aboutrobotsDTD
+    SYSTEM "chrome://browser/locale/aboutRobots.dtd">
+  %aboutrobotsDTD;
+]>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>&robots.pagetitle;</title>
+    <link rel="stylesheet" href="chrome://global/skin/netError.css" type="text/css" media="all" />
+    <link rel="icon" type="image/png" id="favicon" href="chrome://browser/content/robot.ico"/>
+
+    <script type="application/javascript"><![CDATA[
+      var buttonClicked = false;
+      function robotButton() {
+        var button = document.getElementById("errorTryAgain");
+        if (buttonClicked) {
+          button.style.visibility = "hidden";
+        } else {
+          var newLabel = button.getAttribute("label2");
+          button.textContent = newLabel;
+          buttonClicked = true;
+        }
+      }
+    ]]></script>
+
+    <style type="text/css"><![CDATA[
+      #errorPageContainer {
+        background-image: none;
+      }
+
+      #errorPageContainer:before {
+        content: url('chrome://browser/content/aboutRobots-icon.png');
+        position: absolute;
+      }
+
+      body[dir=rtl] #icon,
+      body[dir=rtl] #errorPageContainer:before {
+        transform: scaleX(-1);
+      }
+    ]]></style>
+  </head>
+
+  <body dir="&locale.dir;">
+
+    <!-- PAGE CONTAINER (for styling purposes only) -->
+    <div id="errorPageContainer">
+
+      <!-- Error Title -->
+      <div id="errorTitle">
+        <h1 id="errorTitleText">&robots.errorTitleText;</h1>
+      </div>
+
+      <!-- LONG CONTENT (the section most likely to require scrolling) -->
+      <div id="errorLongContent">
+
+        <!-- Short Description -->
+        <div id="errorShortDesc">
+          <p id="errorShortDescText">&robots.errorShortDescText;</p>
+        </div>
+
+        <!-- Long Description (Note: See netError.dtd for used XHTML tags) -->
+        <div id="errorLongDesc">
+          <ul>
+            <li>&robots.errorLongDesc1;</li>
+            <li>&robots.errorLongDesc2;</li>
+            <li>&robots.errorLongDesc3;</li>
+            <li>&robots.errorLongDesc4;</li>
+          </ul>
+        </div>
+
+        <!-- Short Description -->
+        <div id="errorTrailerDesc">
+          <p id="errorTrailerDescText">&robots.errorTrailerDescText;</p>
+        </div>
+
+      </div>
+
+      <!-- Button -->
+      <button id="errorTryAgain"
+              label2="&robots.dontpress;"
+              onclick="robotButton();">&retry.label;</button>
+
+      <img src="chrome://browser/content/aboutRobots-widget-left.png"
+           style="position: absolute; bottom: -12px; left: -10px;"/>
+      <img src="chrome://browser/content/aboutRobots-widget-left.png"
+           style="position: absolute; bottom: -12px; right: -10px; transform: scaleX(-1);"/>
+    </div>
+
+  </body>
+</html>

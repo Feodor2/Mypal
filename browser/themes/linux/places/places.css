@@ -1,0 +1,31 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Sidebars */
+.sidebar-placesTree {
+  margin: 0;
+}
+
+.sidebar-placesTreechildren::-moz-tree-cell(leaf) ,
+.sidebar-placesTreechildren::-moz-tree-image(leaf) {
+  cursor: pointer;
+}
+
+.sidebar-placesTreechildren::-moz-tree-cell-text(leaf, hover) {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.sidebar-placesTreechildren::-moz-tree-cell(separator) {
+  cursor: default;
+}
+
+/* Trees */
+
+%include ../../shared/places/tree-icons.inc.css
+
+treechildren:-moz-tree-image(container,selected),
+treechildren:-moz-tree-image(selected,focus) {
+  fill: HighlightText;
+}

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<body>
+<script type="text/javascript">
+var audio = new Audio();
+audio.oncanplay = function() {
+  audio.oncanplay = null;
+  audio.play();
+};
+audio.src = "audio.ogg";
+audio.loop = true;
+document.body.appendChild(audio);
+</script>
+</body>

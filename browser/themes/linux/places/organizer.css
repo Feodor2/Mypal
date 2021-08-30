@@ -1,0 +1,103 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+/* Toolbar */
+#placesToolbar {
+  -moz-appearance: menubar;
+}
+
+#placesToolbar:-moz-system-metric(menubar-drag) {
+  -moz-binding: url("chrome://global/content/bindings/toolbar.xml#toolbar-drag");
+}
+
+#placesToolbar > toolbarbutton {
+  color: -moz-menubartext;
+}
+
+#placesToolbar > toolbarbutton:hover {
+  color: ButtonText;
+}
+
+#placesToolbar > toolbarbutton[disabled=true] {
+  color: GrayText;
+}
+
+/* back button */
+
+#back-button {
+  list-style-image: url("moz-icon://stock/gtk-go-back-ltr?size=toolbar");
+}
+#back-button[disabled="true"] {
+  list-style-image: url("moz-icon://stock/gtk-go-back-ltr?size=toolbar&state=disabled");
+}
+
+#back-button:-moz-locale-dir(rtl) {
+  list-style-image: url("moz-icon://stock/gtk-go-back-rtl?size=toolbar");
+}
+#back-button[disabled="true"]:-moz-locale-dir(rtl) {
+  list-style-image: url("moz-icon://stock/gtk-go-back-rtl?size=toolbar&state=disabled");
+}
+
+/* forward button */
+
+#forward-button {
+  list-style-image: url("moz-icon://stock/gtk-go-forward-ltr?size=toolbar");
+}
+#forward-button[disabled="true"] {
+  list-style-image: url("moz-icon://stock/gtk-go-forward-ltr?size=toolbar&state=disabled");
+}
+
+#forward-button:-moz-locale-dir(rtl) {
+  list-style-image: url("moz-icon://stock/gtk-go-forward-rtl?size=toolbar");
+}
+#forward-button[disabled="true"]:-moz-locale-dir(rtl) {
+  list-style-image: url("moz-icon://stock/gtk-go-forward-rtl?size=toolbar&state=disabled");
+}
+
+/* Menu */
+#placesMenu {
+  -moz-appearance: none;
+  border: none;
+}
+
+#placesMenu > menu {
+  padding-inline-start: 4px;
+  -moz-binding: url("chrome://browser/skin/places/organizer.xml#toolbarbutton-dropdown");
+  -moz-appearance: toolbarbutton;
+}
+
+#placesMenu > menu:active,
+#placesMenu > menu:hover,
+#placesMenu > menu[open] {
+  color: ButtonText;
+}
+
+#placesMenu > menu > .menubar-right {
+  -moz-appearance: toolbarbutton-dropdown;
+  width: 12px;
+  height: 12px;
+}
+
+/* Root View */
+#placesView {
+  background-color: Window;
+}
+
+/* Info box */
+#detailsDeck {
+  padding: 5px;
+}
+
+#infoBoxExpanderLabel {
+  padding-inline-start: 2px;
+}
+
+/**
+ * Downloads pane
+ */
+
+#clearDownloadsButton > .toolbarbutton-icon {
+  display: none;
+}

@@ -1,0 +1,106 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+XPCSHELL_TESTS_MANIFESTS += ['tests/unit/xpcshell.ini']
+
+toolkit = CONFIG['MOZ_WIDGET_TOOLKIT']
+
+if toolkit == 'windows':
+    DIRS += ['windows']
+elif toolkit == 'cocoa':
+    DIRS += ['mac']
+else:
+    DIRS += ['unix']
+    if 'gtk' in CONFIG['MOZ_WIDGET_TOOLKIT']:
+        DIRS += ['gtk']
+    elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'android':
+        DIRS += ['android']
+
+XPIDL_SOURCES += [
+    'mozILocaleService.idl',
+    'mozIOSPreferences.idl',
+    'nsICollation.idl',
+    'nsILocale.idl',
+    'nsILocaleService.idl',
+    'nsIScriptableDateFormat.idl',
+]
+
+XPIDL_MODULE = 'locale'
+
+EXPORTS += [
+    'DateTimeFormat.h',
+    'nsCollationCID.h',
+    'nsIPlatformCharset.h',
+    'nsLanguageAtomService.h',
+    'nsPosixLocale.h',
+    'nsUConvPropertySearch.h',
+    'nsWin32Locale.h',
+]
+
+EXPORTS.mozilla.intl += [
+    'LocaleService.h',
+    'OSPreferences.h',
+]
+
+UNIFIED_SOURCES += [
+    'LocaleService.cpp',
+    'nsCollationFactory.cpp',
+    'nsLanguageAtomService.cpp',
+    'nsLocale.cpp',
+    'nsScriptableDateFormat.cpp',
+    'nsUConvPropertySearch.cpp',
+    'OSPreferences.cpp',
+]
+
+# This file includes Carbon.h, which pulls
+# in CoreServices on OSX. This requires
+# a TextRange struct, which clashes with mozilla::TextRange,
+# because of a `using namespace mozilla;` somewhere
+# in the unified build
+SOURCES += [
+    'nsLocaleService.cpp',
+]
+
+if CONFIG['ENABLE_INTL_API']:
+    UNIFIED_SOURCES += [
+        'DateTimeFormat.cpp',
+        'nsCollation.cpp',
+    ]
+else:
+    UNIFIED_SOURCES += [
+        'DateTimeFormatAndroid.cpp',
+        'nsCollationAndroid.cpp',
+    ]
+
+EXTRA_JS_MODULES += [
+    'PluralForm.jsm',
+]
+
+FINAL_LIBRARY = 'xul'
+
+LOCAL_INCLUDES += [
+    '/intl/uconv',
+]
+
+RESOURCE_FILES += [
+    'language.properties',
+]
+
+prefixes = (
+    'encodingsgroups',
+    'langGroups',
+)
+
+for prefix in prefixes:
+    input_file = prefix + '.properties'
+    header = prefix + '.properties.h'
+    GENERATED_FILES += [header]
+    props = GENERATED_FILES[header]
+    props.script = 'props2arrays.py'
+    props.inputs = [input_file]
+
+if CONFIG['ENABLE_TESTS']:
+    DIRS += ['tests/gtest']

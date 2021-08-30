@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<!DOCTYPE bindings [
+  <!ENTITY % browserDTD SYSTEM "chrome://browser/locale/browser.dtd">
+  %browserDTD;
+]>
+
+<bindings id="browserPanelUIBindings"
+          xmlns="http://www.mozilla.org/xbl"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+  <binding id="panelmultiview">
+    <resources>
+      <stylesheet src="chrome://browser/content/customizableui/panelUI.css"/>
+    </resources>
+    <content>
+      <xul:vbox anonid="viewContainer" class="panel-viewcontainer" xbl:inherits="panelopen,viewtype,transitioning">
+        <xul:stack anonid="viewStack" xbl:inherits="viewtype,transitioning" class="panel-viewstack">
+          <xul:vbox anonid="mainViewContainer" class="panel-mainview" xbl:inherits="viewtype"/>
+
+          <!-- Used to capture click events over the PanelUI-mainView if we're in
+               subview mode. That way, any click on the PanelUI-mainView causes us
+               to revert to the mainView mode, whereupon PanelUI-click-capture then
+               allows click events to go through it. -->
+          <xul:vbox anonid="clickCapturer" class="panel-clickcapturer"/>
+
+          <!-- We manually set display: none (via a CSS attribute selector) on the
+               subviews that are not being displayed. We're using this over a deck
+               because a deck assumes the size of its largest child, regardless of
+               whether or not it is shown. That's not good for our case, since we
+               want to allow each subview to be uniquely sized. -->
+          <xul:vbox anonid="subViews" class="panel-subviews" xbl:inherits="panelopen">
+            <children includes="panelview"/>
+          </xul:vbox>
+        </xul:stack>
+      </xul:vbox>
+    </content>
+    <implementation>
+      <constructor><![CDATA[
+        const {PanelMultiView} = Components.utils.import("resource:///modules/PanelMultiView.jsm", {});
+        this.instance = new PanelMultiView(this);
+      ]]></constructor>
+
+      <destructor><![CDATA[
+        this.instance.destructor();
+      ]]></destructor>
+    </implementation>
+  </binding>
+
+  <binding id="photonpanelmultiview" extends="chrome://browser/content/customizableui/panelUI.xml#panelmultiview">
+    <content>
+      <xul:box anonid="viewContainer" class="panel-viewcontainer" xbl:inherits="panelopen,transitioning">
+        <xul:stack anonid="viewStack" xbl:inherits="transitioning" class="panel-viewstack">
+          <children includes="panelview"/>
+        </xul:stack>
+      </xul:box>
+      <xul:box class="panel-viewcontainer offscreen">
+        <xul:box anonid="offscreenViewStack" class="panel-viewstack"/>
+      </xul:box>
+    </content>
+  </binding>
+
+  <binding id="panelview">
+    <content>
+      <xul:box class="panel-header" anonid="header">
+        <xul:toolbarbutton anonid="back"
+                           class="subviewbutton subviewbutton-iconic subviewbutton-back"
+                           closemenu="none"
+                           tabindex="0"
+                           tooltip="&backCmd.label;"
+                           onclick="document.getBindingParent(this).panelMultiView.goBack(); this.blur()"/>
+        <xul:label xbl:inherits="value=title"/>
+      </xul:box>
+      <children/>
+    </content>
+    <implementation>
+      <property name="header"
+                readonly="true"
+                onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'header');"/>
+      <property name="backButton"
+                readonly="true"
+                onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'back');"/>
+      <property name="panelMultiView" readonly="true">
+        <getter><![CDATA[
+          if (!this.parentNode.localName.endsWith("panelmultiview")) {
+            return document.getBindingParent(this.parentNode);
+          }
+
+          return this.parentNode;
+        ]]></getter>
+      </property>
+    </implementation>
+  </binding>
+</bindings>

@@ -1,0 +1,117 @@
+/*
+# -*- Mode: Java; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+%include ../../../../toolkit/themes/osx/global/shared.inc
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+@namespace html url("http://www.w3.org/1999/xhtml");
+
+.windowDialog {
+  padding: 12px;
+  font: -moz-dialog;
+}
+
+/* ----- APPLICATIONS PREFPANE ----- */
+description {
+  font: small-caption;
+  font-weight: normal;
+  line-height: 1.3em;
+  margin-bottom: 4px !important;
+}
+
+prefpane .groupbox-body {
+  -moz-appearance: none;
+  padding: 8px 4px 4px 4px;
+}
+
+prefpane .groupbox-title {
+  background: url("chrome://global/skin/50pct_transparent_grey.png") repeat-x bottom left;
+  margin-bottom: 4px;
+}
+
+tabpanels {
+  padding: 20px 7px 7px;
+}
+
+caption {
+  padding-inline-start: 5px;
+  padding-top: 4px;
+  padding-bottom: 2px;
+}
+
+#popupPolicyRow {
+  margin-bottom: 4px !important;
+  padding-bottom: 4px !important;
+  border-bottom: 1px solid #ccc;
+}
+
+#translationAttributionImage {
+  width: 70px;
+  cursor: pointer;
+}
+
+#browserUseCurrent,
+#browserUseBookmark,
+#browserUseBlank {
+  margin-top: 10px;
+}
+
+#advancedPrefs {
+  margin: 0 8px;
+}
+
+#privacyPrefs {
+  padding: 0 4px;
+}
+
+#privacyPrefs > tabpanels {
+  padding: 18px 10px 10px;
+}
+
+#OCSPDialogPane {
+  font: message-box !important;
+}
+
+/* General Pane */
+
+#useFirefoxSync,
+#getStarted {
+  font-size: 90%;
+}
+
+#isNotDefaultLabel {
+  font-weight: bold;
+}
+
+/**
+ * Update Preferences
+ */
+#autoInstallOptions {
+  margin-inline-start: 20px;
+}
+
+.updateControls {
+  margin-inline-start: 10px;
+}
+
+/**
+ * Clear Private Data
+ */
+#SanitizeDialogPane > groupbox {
+  margin-top: 0;
+}
+
+
+/* ----- SYNC PANE ----- */
+
+#noFxaAccount {
+  line-height: 1.2em;
+}
+
+#noFxaAccount > label:first-child {
+  margin-bottom: 0.6em;
+}

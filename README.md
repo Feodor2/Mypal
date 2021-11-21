@@ -8,4 +8,4 @@ Everebody else  thouh may take the source from other places, and continue develo
 
 For details read https://github.com/Feodor2/Mypal/issues/3
 
-I am developing another mypal upon the firfox quantum 68-78, recently i have finished to study mozilla rust language and found that it is no problem to use rust to build for winxp.
+I am developing another mypal upon the firefox quantum 68-78, recently i have finished studying mozilla rust language and found that it is no problem to use rust to build for winxp.

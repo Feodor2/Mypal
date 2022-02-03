@@ -12,3 +12,6 @@ I am developing another mypal upon the firefox quantum 68-78, recently i have fi
 
 
 Today 3.2.2022 i got the quantum running on winxp, great!
+
+![image](https://user-images.githubusercontent.com/19492771/152347482-f51058cd-2967-4bc5-80fd-5d269c328774.png)
+
